@@ -120,6 +120,26 @@ slides = [
 result = slide_tool.run(slides)
 ```
 
+### DataAnalysisTool
+
+Analyzes data files and provides statistical insights, visualizations, and exploratory data analysis.
+
+```python
+data_tool = DataAnalysisTool()
+
+# Basic usage with a file path
+result = data_tool.run("path/to/data.csv")
+
+# With specific analysis parameters
+analysis_params = {
+    "file_path": "path/to/data.csv",
+    "analysis_type": "visualization",
+    "viz_type": "correlation",
+    "columns": ["age", "income", "education"]
+}
+result = data_tool.run(analysis_params)
+```
+
 ## Creating Custom Tools
 
 You can create your own tools by extending the `Tool` base class:
