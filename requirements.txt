@@ -1,0 +1,6 @@
+openai
+youtube_transcript_api
+duckduckgo-search
+requests
+python-pptx
+pydantic
