@@ -98,9 +98,9 @@ class AgentPro:
         response = ""
         while True:
             response = self.client.chat.completions.create(
-                    model="gpt-4",
+                    model="gpt-4o-mini",
                     messages=self.messages,
-                    max_tokens=2000
+                    max_tokens=8000
                 ).choices[0].message.content.strip()
             self.messages.append({"role":"assistant", "content": response})
             print("="*80)
