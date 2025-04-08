@@ -2,7 +2,6 @@ from openai import OpenAI
 from typing import List, Dict
 import json
 import os
-
 from .tools.base import Tool
 
 REACT_AGENT_SYSTEM_PROMPT = """
@@ -31,8 +30,7 @@ class AgentPro:
         self.tools = self.format_tools(tools)
         self.react_prompt = react_prompt.format(
             tools="\n\n".join(map(lambda tool: tool.get_tool_description(), tools)),
-            tool_names=", ".join(map(lambda tool: tool.name, tools))
-        )
+            tool_names=", ".join(map(lambda tool: tool.name, tools)))
         self.messages = []
         if system_prompt:
             self.messages.append({"role": "system", "content": system_prompt})
@@ -92,13 +90,11 @@ class AgentPro:
             return f"Observation: There was an error executing the tool\nError: {e}"
 
     def __call__(self, prompt):
-        self.messages.append(
-            {"role": "user", "content": prompt}
-        )
+        self.messages.append({"role": "user", "content": prompt})
         response = ""
         while True:
             response = self.client.chat.completions.create(
-                    model="gpt-4o-mini",
+                    model="gpt-4o-mini", # SET GPT-4o-mini AS DEFAULT, BUT VARIABLE W/OPEN ROUTER MODELS
                     messages=self.messages,
                     max_tokens=8000
                 ).choices[0].message.content.strip()
@@ -110,6 +106,4 @@ class AgentPro:
                 return response.split("Final Answer:")[-1].strip()
             if "Action" in response and "Action Input" in response:
                 observation = self.tool_call(response)
-                self.messages.append(
-                    {"role": "assistant", "content": observation}
-                )
+                self.messages.append({"role": "assistant", "content": observation})
