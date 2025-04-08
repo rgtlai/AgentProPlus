@@ -285,10 +285,8 @@ class DataAnalysisTool(LLMTool):
                         ],
                         max_tokens=3000)
                 return response.choices[0].message.content
-        #except Exception as e2:
-        #    return f"Error generating data insights with fallback model: {str(e2)}"
-        except Exception as e:
-            return f"Error generating data insights: {str(e)}"
+        except Exception as e2:
+            return f"Error generating data insights with fallback model: {str(e2)}"
     def run(self, prompt: Union[str, Dict]) -> str:
         """Run the data analysis tool."""
         print(f"Calling Data Analysis Tool with prompt: {prompt}")
