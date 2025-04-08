@@ -52,16 +52,7 @@ This starts an interactive session with the agent where you can enter queries.
 ### Basic Usage
 
 ```python
-from agentpro import AgentPro
-from agentpro.tools import AresInternetTool, CodeEngine, YouTubeSearchTool, SlideGenerationTool
-
-# Initialize tools
-ares_tool = AresInternetTool()
-code_tool = CodeEngine()
-youtube_tool = YouTubeSearchTool()
-slide_tool = SlideGenerationTool()
-
-# Create agent with tools
+from agentpro import AgentPro, ares_tool, code_tool, youtube_tool, slide_tool
 agent = AgentPro(tools=[ares_tool, code_tool, youtube_tool, slide_tool])
 
 # Run a query
@@ -191,6 +182,7 @@ agentpro/
 - Python 3.8+
 - OpenAI API key
 - Traversaal Ares API key (for internet search)
+- Open Router API Key (Optional)(for other models) 
 
 ## License
 
