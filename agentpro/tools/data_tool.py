@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from io import StringIO
 import json
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional, Union, Any
 import tempfile
 from .base import LLMTool
 
