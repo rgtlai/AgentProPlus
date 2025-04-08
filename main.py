@@ -4,7 +4,6 @@ import os
 import dotenv
 def main():
     dotenv.load_dotenv()
-    # Check for required API keys
     if not os.environ.get("OPENAI_API_KEY"):
         print("Error: OPENAI_API_KEY environment variable is not set.")
         print("Please set it before running the agent.")
@@ -14,8 +13,13 @@ def main():
         print("AresInternetTool will not be available.")
         tools = [CodeEngine(), YouTubeSearchTool(), SlideGenerationTool()]
     else:
-        tools = [AresInternetTool(), CodeEngine(), YouTubeSearchTool(), SlideGenerationTool()]
-    # ADD OPEN ROUTER API KEY HERE
+        tools = [AresInternetTool(), CodeEngine(), YouTubeSearchTool(), SlideGenerationTool()] # ADD MORE TOOLS WHEN AVAILABLE
+    if not os.environ.get("OPENROUTER_API_KEY"):
+        print("Warning: OPENROUTER_API_KEY environment variable is not set.")
+        print("OpenRouter functionality may be limited.")
+    if not os.environ.get("MODEL_NAME"):
+        print("Warning: MODEL_NAME environment variable is not set.")
+        print("Default model (GPT-4o-mini) will be used.")    
     agent = AgentPro(tools=tools)
     print("AgentPro is initialized and ready. Enter 'quit' to exit.")
     print("Available tools:")
