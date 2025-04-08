@@ -88,22 +88,84 @@ class AgentPro:
             return f"Observation: Tool '{action}' not found. Available tools: {list(self.tools.keys())}"
         except Exception as e:
             return f"Observation: There was an error executing the tool\nError: {e}"
-
+    #def __call__(self, prompt):
+    #    self.messages.append({"role": "user", "content": prompt})
+    #    response = ""
+    #    while True:
+    #        response = self.client.chat.completions.create(
+    #                model="gpt-4o-mini", # SET GPT-4o-mini AS DEFAULT, BUT VARIABLE W/OPEN ROUTER MODELS
+    #                messages=self.messages,
+    #                max_tokens=8000
+    #            ).choices[0].message.content.strip()
+    #        self.messages.append({"role":"assistant", "content": response})
+    #        print("="*80)
+    #        print(response)
+    #        print("="*80)
+    #        if "Final Answer" in response:
+    #            return response.split("Final Answer:")[-1].strip()
+    #        if "Action" in response and "Action Input" in response:
+    #            observation = self.tool_call(response)
+    #            self.messages.append({"role": "assistant", "content": observation})
     def __call__(self, prompt):
         self.messages.append({"role": "user", "content": prompt})
         response = ""
-        while True:
-            response = self.client.chat.completions.create(
-                    model="gpt-4o-mini", # SET GPT-4o-mini AS DEFAULT, BUT VARIABLE W/OPEN ROUTER MODELS
+        openrouter_api_key = os.environ.get("OPENROUTER_API_KEY")
+        model_name = os.environ.get("MODEL_NAME", "gpt-4o-mini")  # Default to gpt-4o-mini if MODEL_NAME is not set
+        try:
+            if openrouter_api_key:
+                print(f"Using OpenRouter with model: {model_name} for agent conversation")
+                client = OpenAI(base_url="https://openrouter.ai/api/v1", api_key=openrouter_api_key)
+                while True:
+                    response = client.chat.completions.create(
+                        model=model_name,
+                        messages=self.messages,
+                        max_tokens=8000
+                    ).choices[0].message.content.strip()
+                    self.messages.append({"role":"assistant", "content": response})
+                    print("="*80)
+                    print(response)
+                    print("="*80)
+                    if "Final Answer" in response:
+                        return response.split("Final Answer:")[-1].strip()
+                    if "Action" in response and "Action Input" in response:
+                        observation = self.tool_call(response)
+                        self.messages.append({"role": "assistant", "content": observation})
+            else: # Fall back to default OpenAI client
+                print("OpenRouter API key not found, using default OpenAI client with gpt-4o-mini")
+                while True:
+                    response = self.client.chat.completions.create(
+                        model="gpt-4o-mini",
+                        messages=self.messages,
+                        max_tokens=8000
+                    ).choices[0].message.content.strip()
+                    self.messages.append({"role":"assistant", "content": response})
+                    print("="*80)
+                    print(response)
+                    print("="*80)
+                    if "Final Answer" in response:
+                        return response.split("Final Answer:")[-1].strip()
+                    if "Action" in response and "Action Input" in response:
+                        observation = self.tool_call(response)
+                        self.messages.append({"role": "assistant", "content": observation})
+        except Exception as e:
+            print(f"Error with primary model: {e}")
+            print("Falling back to default OpenAI client with gpt-4o-mini")
+        try:
+            while True:
+                response = self.client.chat.completions.create(
+                    model="gpt-4o-mini",
                     messages=self.messages,
                     max_tokens=8000
                 ).choices[0].message.content.strip()
-            self.messages.append({"role":"assistant", "content": response})
-            print("="*80)
-            print(response)
-            print("="*80)
-            if "Final Answer" in response:
-                return response.split("Final Answer:")[-1].strip()
-            if "Action" in response and "Action Input" in response:
-                observation = self.tool_call(response)
-                self.messages.append({"role": "assistant", "content": observation})
+                self.messages.append({"role":"assistant", "content": response})
+                print("="*80)
+                print(response)
+                print("="*80)
+                if "Final Answer" in response:
+                    return response.split("Final Answer:")[-1].strip()
+                if "Action" in response and "Action Input" in response:
+                    observation = self.tool_call(response)
+                    self.messages.append({"role": "assistant", "content": observation})
+        except Exception as e2:
+            print(f"Critical error with all models: {e2}")
+            return f"Error: Failed to generate response with both primary and fallback models. Details: {str(e2)}"
