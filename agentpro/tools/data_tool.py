@@ -284,19 +284,17 @@ class DataAnalysisTool(LLMTool):
                             {"role": "user", "content": prompt}
                         ],
                         max_tokens=3000)
-                return response.choices[0].message.content
-        except Exception as e2:
-            return f"Error generating data insights with fallback model: {str(e2)}"
+                    return response.choices[0].message.content
+                except Exception as e2:
+                    return f"Error generating data insights with fallback model: {str(e2)}"
     def run(self, prompt: Union[str, Dict]) -> str:
         """Run the data analysis tool."""
         print(f"Calling Data Analysis Tool with prompt: {prompt}")
-        try:
-            # If prompt is a string, try to parse it as JSON or treat it as a file path
+        try: # If prompt is a string, try to parse it as JSON or treat it as a file path
             if isinstance(prompt, str):
                 try:
                     params = json.loads(prompt)
-                except json.JSONDecodeError:
-                    # Treat as file path
+                except json.JSONDecodeError: # Treat as file path
                     return self.load_data(prompt)
             else:
                 params = prompt
