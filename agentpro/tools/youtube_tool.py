@@ -71,22 +71,19 @@ class YouTubeSearchTool(LLMTool):
         except Exception as e:
             print(f"Error getting transcript: {str(e)}")
             return None
-    #####
-    def summarize_content(self, transcript):
-        prompt = "Create a concise summary of the following video transcript"
-        try:
-            response = self.client.chat.completions.create(
-                model="gpt-4",
-                messages=[
-                    {"role": "system", "content": "You are an expert content creator specializing in creating high-quality content from video transcripts."},
-                    {"role": "user", "content": f"{prompt}\n\nTranscript:\n{transcript}"}
-                ],
-                max_tokens=2000
-            )
-            return response.choices[0].message.content.strip()
-        except Exception as e:
-            return None
-    ######
+    #def summarize_content(self, transcript):
+    #    prompt = "Create a concise summary of the following video transcript"
+    #    try:
+    #        response = self.client.chat.completions.create(
+    #            model="gpt-4",
+    #            messages=[
+    #                {"role": "system", "content": "You are an expert content creator specializing in creating high-quality content from video transcripts."},
+    #                {"role": "user", "content": f"{prompt}\n\nTranscript:\n{transcript}"}
+    #            ],
+    #            max_tokens=2000)
+    #        return response.choices[0].message.content.strip()
+    #    except Exception as e:
+    #        return None
     def summarize_content(self, transcript):
         prompt = "Create a concise summary of the following video transcript"
         openrouter_api_key = os.environ.get("OPENROUTER_API_KEY")
@@ -127,19 +124,16 @@ class YouTubeSearchTool(LLMTool):
             except Exception as e2:
                 print(f"Error with fallback model: {e2}")
                 return None
-    #######
     def run(self, prompt: str) -> str:
         print(f"Calling YouTube Search Tool with prompt: {prompt}")
-        try:
-            # Search for videos
+        try: # Search for videos
             videos = self.search_videos(prompt, 3)
             if isinstance(videos, str):  # Error occurred
                 return f"Search error: {videos}"
             if not videos:  # No videos found
                 return "No videos found matching the query."
             results = []
-            for video in videos:
-                # Get transcript
+            for video in videos: # Get transcript
                 transcript = self.get_transcript(video['video_id'])
                 if not transcript:
                     continue
