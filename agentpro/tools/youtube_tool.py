@@ -2,7 +2,7 @@ from youtube_transcript_api import YouTubeTranscriptApi
 from duckduckgo_search import DDGS
 from urllib.parse import urlparse, parse_qs
 from .base import LLMTool
-
+from typing import Any
 class YouTubeSearchTool(LLMTool):
     name: str = "YouTube Search Tool"
     description: str = "A tool capable of searching the internet for youtube videos and returns the text transcript of the videos"
