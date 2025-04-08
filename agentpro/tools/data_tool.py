@@ -287,6 +287,8 @@ class DataAnalysisTool(LLMTool):
                     return response.choices[0].message.content
                 except Exception as e2:
                     return f"Error generating data insights with fallback model: {str(e2)}"
+        except Exception as e:
+            return f"Error analyzing data for insights: {str(e)}"            
     def run(self, prompt: Union[str, Dict]) -> str:
         """Run the data analysis tool."""
         print(f"Calling Data Analysis Tool with prompt: {prompt}")
