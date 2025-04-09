@@ -87,15 +87,11 @@ This isn’t about flashy demos. We want to see domain-specific, usable, vertica
 
 You can use any framework, but we recommend trying **[AgentPro](https://github.com/Traversaal/AgentPro)** — our open-source toolkit designed for rapid prototyping and robust architecture.
 
----
-
 ### 📅 Key Dates
 
-- 🟢 **Hackathon Starts:** April 9, 2025  
-- ⏳ **Submission Deadline:** April 15, 2025  
-- 🏆 **Winners Announced:** April 15, 2025 (Live @ Optimized AI Conference)
-
----
+- **Hackathon Starts:** April 9, 2025  
+- **Submission Deadline:** April 15, 2025  
+- **Winners Announced:** April 15, 2025 (Live @ Optimized AI Conference)
 
 ### 💰 Prizes + Recognition
 
@@ -105,11 +101,10 @@ You can use any framework, but we recommend trying **[AgentPro](https://github.c
 | 🥈 Runner-Up        | $1,000     |
 | 🥉 Honorable Mention| $500       |
 
-✨ Plus:
+Plus:
 - 1:1 **Mentorship opportunities**
 - Invitation to **Traversaal’s AI Fellowship Program**
-
----
+for more details, follow this [link](https://hackathon.traversaal.ai/)
 📩 Questions? Reach us at [hackathon-oai@traversaal.ai](hackathon-oai@traversaal.ai)
 
 
