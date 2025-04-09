@@ -104,7 +104,9 @@ You can use any framework, but we recommend trying **[AgentPro](https://github.c
 Plus:
 - 1:1 **Mentorship opportunities**
 - Invitation to **Traversaal’s AI Fellowship Program**
-for more details, follow this [link](https://hackathon.traversaal.ai/)
+
+For more details, follow this [link](https://hackathon.traversaal.ai/)
+
 📩 Questions? Reach us at [hackathon-oai@traversaal.ai](hackathon-oai@traversaal.ai)
 
 
