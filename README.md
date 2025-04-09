@@ -86,9 +86,9 @@ You can use any framework, but we recommend trying **[AgentPro](https://github.c
 
 | Prize Tier         | Reward     |
 |--------------------|------------|
-| 🥇 Grand Prize      | $2,000     |
-| 🥈 Runner-Up        | $1,000     |
-| 🥉 Honorable Mention| $500       |
+| 🥇 Grand Prize      | $1,000     |
+| 🥈 Runner-Up        | $500     |
+| 🥉 Honorable Mention x2 | $250       |
 
 Plus:
 - 1:1 **Mentorship opportunities**
