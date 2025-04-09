@@ -4,7 +4,7 @@ AgentPro is a flexible framework for building AI agents with multiple specialize
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.8%2B-blue" alt="Python 3.8+">
-  <img src="https://img.shields.io/badge/License-MIT-green" alt="License: MIT">
+  <img src="https://img.shields.io/badge/License-Apache%202.0-blue" alt="License: Apache 2.0">
 </p>
 
 ## Features
