@@ -66,7 +66,7 @@ print(response)
 
 We’re teaming up with the **Optimized AI Conference 2025** to host a **global hackathon on AI Agents** — open to all developers, builders, researchers, and dreamers working on intelligent systems.
 
-### 🚀 The Challenge
+### The Challenge
 
 **Build a real, functional AI Agent** that solves a real-world problem.
 
@@ -78,13 +78,13 @@ This isn’t about flashy demos. We want to see domain-specific, usable, vertica
 
 You can use any framework, but we recommend trying **[AgentPro](https://github.com/Traversaal/AgentPro)** — our open-source toolkit designed for rapid prototyping and robust architecture.
 
-### 📅 Key Dates
+### Key Dates
 
 - **Hackathon Starts:** April 9, 2025  
 - **Submission Deadline:** April 15, 2025  
 - **Winners Announced:** April 15, 2025 (Live @ Optimized AI Conference)
 
-### 💰 Prizes + Recognition
+### Prizes + Recognition
 
 | Prize Tier         | Reward     |
 |--------------------|------------|
@@ -95,6 +95,9 @@ You can use any framework, but we recommend trying **[AgentPro](https://github.c
 Plus:
 - 1:1 **Mentorship opportunities**
 - Invitation to **Traversaal’s AI Fellowship Program**
+
+### Want to be a Judge?
+We’re looking for global experts in AI, product, UX, and enterprise applications to help evaluate the submissions. 👉 [Apply to be a Judge](https://forms.gle/zpC4GbEjAkD1osY68)
 
 For more details, follow this [link](https://hackathon.traversaal.ai/)
 
