@@ -71,6 +71,48 @@ The agent can handle a variety of tasks:
 - **YouTube Analysis**: "Find and summarize recent videos about machine learning"
 - **Presentation Creation**: "Make a presentation about renewable energy sources"
 
+## 🌍 Traversaal x Optimized AI Hackathon
+
+We’re teaming up with the **Optimized AI Conference 2025** to host a **global hackathon on AI Agents** — open to all developers, builders, researchers, and dreamers working on intelligent systems.
+
+### 🚀 The Challenge
+
+**Build a real, functional AI Agent** that solves a real-world problem.
+
+This isn’t about flashy demos. We want to see domain-specific, usable, vertical agents — like:
+- 🧑‍💼 Customer Support Agents
+- 🔬 Research Assistants
+- 📊 Data Analyst Agents
+- 💡 Or something totally original
+
+You can use any framework, but we recommend trying **[AgentPro](https://github.com/Traversaal/AgentPro)** — our open-source toolkit designed for rapid prototyping and robust architecture.
+
+---
+
+### 📅 Key Dates
+
+- 🟢 **Hackathon Starts:** April 9, 2025  
+- ⏳ **Submission Deadline:** April 15, 2025  
+- 🏆 **Winners Announced:** April 15, 2025 (Live @ Optimized AI Conference)
+
+---
+
+### 💰 Prizes + Recognition
+
+| Prize Tier         | Reward     |
+|--------------------|------------|
+| 🥇 Grand Prize      | $2,000     |
+| 🥈 Runner-Up        | $1,000     |
+| 🥉 Honorable Mention| $500       |
+
+✨ Plus:
+- 1:1 **Mentorship opportunities**
+- Invitation to **Traversaal’s AI Fellowship Program**
+
+---
+📩 Questions? Reach us at [hackathon-oai@traversaal.ai](hackathon-oai@traversaal.ai)
+
+
 ## Tools Overview
 
 ### AresInternetTool
