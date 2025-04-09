@@ -62,16 +62,7 @@ response = agent("Generate a presentation on the latest AI advancements")
 print(response)
 ```
 
-### Example Queries
-
-The agent can handle a variety of tasks:
-
-- **Internet Research**: "What are the latest developments in quantum computing?"
-- **Code Generation**: "Create a Python script to analyze stock prices and generate a chart"
-- **YouTube Analysis**: "Find and summarize recent videos about machine learning"
-- **Presentation Creation**: "Make a presentation about renewable energy sources"
-
-## 🌍 Traversaal x Optimized AI Hackathon
+## 🌍 Traversaal x Optimized AI Hackathon 2025
 
 We’re teaming up with the **Optimized AI Conference 2025** to host a **global hackathon on AI Agents** — open to all developers, builders, researchers, and dreamers working on intelligent systems.
 
@@ -111,6 +102,12 @@ For more details, follow this [link](https://hackathon.traversaal.ai/)
 
 
 ## Tools Overview
+The agentpro can handle a variety of tasks such as:
+
+- **Internet Research**: "What are the latest developments in quantum computing?"
+- **Code Generation**: "Create a Python script to analyze stock prices and generate a chart"
+- **YouTube Analysis**: "Find and summarize recent videos about machine learning"
+- **Presentation Creation**: "Make a presentation about renewable energy sources"
 
 ### AresInternetTool
 
