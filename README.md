@@ -103,7 +103,7 @@ For more details, follow this [link](https://hackathon.traversaal.ai/)
 
 
 ## Tools Overview
-The agentpro can handle a variety of tasks such as:
+The AgentPro toolkit comes with a variety of default tasks, such as:
 
 - **Internet Research**: "What are the latest developments in quantum computing?"
 - **Code Generation**: "Create a Python script to analyze stock prices and generate a chart"
