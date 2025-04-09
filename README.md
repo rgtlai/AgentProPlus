@@ -52,11 +52,11 @@ This starts an interactive session with the agent where you can enter queries.
 ### Basic Usage
 
 ```python
-from agentpro import AgentPro, ares_tool, code_tool, youtube_tool, slide_tool
-agent = AgentPro(tools=[ares_tool, code_tool, youtube_tool, slide_tool])
+from agentpro import AgentPro, ares_tool, code_tool, youtube_tool
+agent = AgentPro(tools=[ares_tool, code_tool, youtube_tool])
 
 # Run a query
-response = agent("Generate a presentation on the latest AI advancements")
+response = agent("Generate a summary on the latest AI advancements")
 print(response)
 ```
 
@@ -108,7 +108,7 @@ The AgentPro toolkit comes with a variety of default tasks, such as:
 - **Internet Research**: "What are the latest developments in quantum computing?"
 - **Code Generation**: "Create a Python script to analyze stock prices and generate a chart"
 - **YouTube Analysis**: "Find and summarize recent videos about machine learning"
-- **Presentation Creation**: "Make a presentation about renewable energy sources"
+<!--- **Presentation Creation**: "Make a presentation about renewable energy sources"-->
 
 ### AresInternetTool
 
@@ -137,7 +137,7 @@ youtube_tool = YouTubeSearchTool()
 result = youtube_tool.run("machine learning tutorials")
 ```
 
-### SlideGenerationTool
+### SlideGenerationTool (**Work in progress**)
 
 Creates PowerPoint presentations from structured content.
 
@@ -207,7 +207,7 @@ agentpro/
 │   │   ├── ares_tool.py      # Internet search
 │   │   ├── code_tool.py      # Code generation
 │   │   ├── youtube_tool.py   # YouTube analysis
-│   │   └── slide_tool.py     # Presentation generation
+│   │   └── slide_tool.py     # Presentation generation (**Work in progress**)
 │   └── examples/
 │       ├── __init__.py
 │       └── example_usage.py  # Usage examples
