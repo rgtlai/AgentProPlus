@@ -49,8 +49,6 @@ python main.py
 
 This starts an interactive session with the agent where you can enter queries.
 
-## Usage Examples
-
 ### Basic Usage
 
 ```python
