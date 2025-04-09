@@ -150,22 +150,22 @@ class AgentPro:
         except Exception as e:
             print(f"Error with primary model: {e}")
             print("Falling back to default OpenAI client with gpt-4o-mini")
-        try:
-            while True:
-                response = self.client.chat.completions.create(
-                    model="gpt-4o-mini",
-                    messages=self.messages,
-                    max_tokens=8000
-                ).choices[0].message.content.strip()
-                self.messages.append({"role":"assistant", "content": response})
-                print("="*80)
-                print(response)
-                print("="*80)
-                if "Final Answer" in response:
-                    return response.split("Final Answer:")[-1].strip()
-                if "Action" in response and "Action Input" in response:
-                    observation = self.tool_call(response)
-                    self.messages.append({"role": "assistant", "content": observation})
-        except Exception as e2:
-            print(f"Critical error with all models: {e2}")
-            return f"Error: Failed to generate response with both primary and fallback models. Details: {str(e2)}"
+            try:
+                while True:
+                    response = self.client.chat.completions.create(
+                        model="gpt-4o-mini",
+                        messages=self.messages,
+                        max_tokens=8000
+                    ).choices[0].message.content.strip()
+                    self.messages.append({"role":"assistant", "content": response})
+                    print("="*80)
+                    print(response)
+                    print("="*80)
+                    if "Final Answer" in response:
+                        return response.split("Final Answer:")[-1].strip()
+                    if "Action" in response and "Action Input" in response:
+                        observation = self.tool_call(response)
+                        self.messages.append({"role": "assistant", "content": observation})
+            except Exception as e2:
+                print(f"Critical error with all models: {e2}")
+                return f"Error: Failed to generate response with both primary and fallback models. Details: {str(e2)}"
