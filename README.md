@@ -35,8 +35,6 @@ Create a `.env` file in the root directory with your API keys:
 ```
 OPENAI_API_KEY=your_openai_api_key
 TRAVERSAAL_ARES_API_KEY=your_traversaal_ares_api_key
-OPENROUTER_API_KEY=your_openrouter_api_key
-MODEL_NAME=your_choice_of_openrouter_model_id
 ```
 
 ### Running the Agent
@@ -102,10 +100,8 @@ For more details, follow this [link](https://hackathon.traversaal.ai/)
 📩 Questions? Reach us at [hackathon-oai@traversaal.ai](hackathon-oai@traversaal.ai)
 
 
-
 ## Data Science Agent
 https://github.com/user-attachments/assets/aeeb91e4-134e-4a14-bbc4-2523ba236c56
-
 
 
 ## Tools Overview
@@ -114,7 +110,7 @@ The AgentPro toolkit comes with a variety of default tasks, such as:
 - **Internet Research**: "What are the latest developments in quantum computing?"
 - **Code Generation**: "Create a Python script to analyze stock prices and generate a chart"
 - **YouTube Analysis**: "Find and summarize recent videos about machine learning"
-<!--- **Presentation Creation**: "Make a presentation about renewable energy sources"-->
+- **Presentation Creation**: "Make a presentation about renewable energy sources"
 
 ### AresInternetTool
 
@@ -143,7 +139,7 @@ youtube_tool = YouTubeSearchTool()
 result = youtube_tool.run("machine learning tutorials")
 ```
 
-### SlideGenerationTool (**Work in progress**)
+### SlideGenerationTool
 
 Creates PowerPoint presentations from structured content.
 
@@ -227,7 +223,6 @@ agentpro/
 - Python 3.8+
 - OpenAI API key
 - Traversaal Ares API key (for internet search)
-- Open Router API Key (Optional)(for other models) 
 
 ## License
 
