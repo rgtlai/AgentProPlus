@@ -102,6 +102,12 @@ For more details, follow this [link](https://hackathon.traversaal.ai/)
 📩 Questions? Reach us at [hackathon-oai@traversaal.ai](hackathon-oai@traversaal.ai)
 
 
+
+## Data Science Agent
+https://github.com/user-attachments/assets/aeeb91e4-134e-4a14-bbc4-2523ba236c56
+
+
+
 ## Tools Overview
 The AgentPro toolkit comes with a variety of default tasks, such as:
 
