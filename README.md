@@ -36,6 +36,12 @@ Create a `.env` file in the root directory with your API keys:
 OPENAI_API_KEY=your_openai_api_key
 TRAVERSAAL_ARES_API_KEY=your_traversaal_ares_api_key
 ```
+Ares internet tool: Searches the internet for real-time information using the Traversaal Ares API. To get `TRAVERSAAL_ARES_API_KEY`. Follow these steps:
+
+1. Go to the [Traversaal API platform](https://api.traversaal.ai/)
+2. Log in or create an account
+3. Click **"Create new secret key"**
+4. Copy the generated key and paste it into the notebook like this:
 
 ### Running the Agent
 
