@@ -1,5 +1,5 @@
 from agentpro import AgentPro
-from agentpro.tools import AresInternetTool, CodeEngine, YouTubeSearchTool#, SlideGenerationTool # ADD MORE TOOLS WHEN AVAILABLE
+from agentpro.tools import AresInternetTool, CodeEngine, YouTubeSearchTool, SlideGenerationTool # ADD MORE TOOLS WHEN AVAILABLE
 import os
 import dotenv
 def main():
@@ -11,9 +11,9 @@ def main():
     if not os.environ.get("TRAVERSAAL_ARES_API_KEY"):
         print("Warning: TRAVERSAAL_ARES_API_KEY environment variable is not set.")
         print("AresInternetTool will not be available.")
-        tools = [CodeEngine(), YouTubeSearchTool()]#, SlideGenerationTool()]
+        tools = [CodeEngine(), YouTubeSearchTool(), SlideGenerationTool()]
     else:
-        tools = [AresInternetTool(), CodeEngine(), YouTubeSearchTool()]#, SlideGenerationTool()] # ADD MORE TOOLS WHEN AVAILABLE
+        tools = [AresInternetTool(), CodeEngine(), YouTubeSearchTool(), SlideGenerationTool()] # ADD MORE TOOLS WHEN AVAILABLE
     if not os.environ.get("OPENROUTER_API_KEY"):
         print("Warning: OPENROUTER_API_KEY environment variable is not set.")
         print("OpenRouter functionality may be limited.")
