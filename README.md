@@ -41,7 +41,7 @@ Ares internet tool: Searches the internet for real-time information using the Tr
 1. Go to the [Traversaal API platform](https://api.traversaal.ai/)
 2. Log in or create an account
 3. Click **"Create new secret key"**
-4. Copy the generated key and paste it into the notebook like this:
+4. Copy the generated key and paste in `.env` file :
 
 ### Running the Agent
 
