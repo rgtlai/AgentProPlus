@@ -23,7 +23,7 @@ AgentPro is a flexible framework for building AI agents with multiple specialize
 Clone the repository and install the required packages:
 
 ```bash
-git clone https://github.com/yourusername/agentpro.git
+git clone https://github.com/traversaal-ai/AgentPro.git
 cd agentpro
 pip install -r requirements.txt
 ```
