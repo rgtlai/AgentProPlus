@@ -57,6 +57,7 @@ agent = AgentPro(tools=[ares_tool, code_tool, youtube_tool])
 response = agent("Generate a summary on the latest AI advancements")
 print(response)
 ```
+You can also use the [Quick Start](https://github.com/traversaal-ai/AgentPro/blob/main/agentpro/examples/AgentPro_Quick_Start.ipynb) Jupyter Notebook to run AgentPro directly in Colab.
 
 ## 🌍 Traversaal x Optimized AI Hackathon 2025
 
