@@ -24,7 +24,7 @@ Clone the repository and install the required packages:
 
 ```bash
 git clone https://github.com/traversaal-ai/AgentPro.git
-cd agentpro
+cd AgentPro
 pip install -r requirements.txt
 ```
 
