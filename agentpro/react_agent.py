@@ -57,7 +57,6 @@ Final Answer: [your answer]
 
 Important:
 - Think step-by-step
-- Do not repeat the given prompt, only respond next steps
 - Use available tools wisely
 - If stuck, reflect and retry
 - Do no hallucinate and use tools if needed
@@ -65,7 +64,7 @@ Important:
 """
 
     def _format_history(self, thought_process: List[ThoughtStep]) -> str:
-        history = ""
+        history = "Below is the history of completed steps so far:\n---\n"
         for step in thought_process:
             if step.pause_reflection:
                 history += f"PAUSE: {step.pause_reflection}\n"
@@ -75,6 +74,7 @@ Important:
                 history += f"Action: {step.action.model_dump_json()}\n"
             if step.observation:
                 history += f"Observation: {step.observation.result}\n"
+        history += "---\n"
         return history
 
     def execute_tool(self, action: Action) -> str:
@@ -121,6 +121,7 @@ Important:
             prompt = f"{self.system_prompt}\n\nQuestion: {query}\n\n"
             if thought_process:
                 prompt += self._format_history(thought_process)
+            prompt += "\nNow continue the next steps\n"
 
             # Print whole System Prompt once in the start
             if not printed_prompt:
