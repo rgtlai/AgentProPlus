@@ -57,6 +57,7 @@ Final Answer: [your answer]
 
 Important:
 - Think step-by-step
+- Do not repeat the given prompt, only respond next steps
 - Use available tools wisely
 - If stuck, reflect and retry
 - Do no hallucinate and use tools if needed
