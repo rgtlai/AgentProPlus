@@ -9,6 +9,7 @@ import re
 from datetime import datetime
 
 
+
 class AgentPro:
     def __init__(self, model: str = None, tools: List[Tool] = None, max_iterations: int = 20):
 
@@ -36,22 +37,22 @@ You have access to these tools: {tool_names}
 
 {tools_description}
 
-For each iteration:
+For each iteration, follow these steps:
 1. Thought: Think about what needs to be done.
 2. Action: Decide on an appropriate Action if needed.
 3. Observation: Observe the result after the Action.
 4. PAUSE: Reflect on what to do next.
 5. Repeat Thought/Action/Observation/PAUSE as needed until you find the final answer.
 
-Strict Format:
+Format:
 Thought: Your reasoning
 Action: {{"action_type": "<action_type>", "input": <input_data>}}
 
-After action result:
+Format after action result:
 Observation: result here
 PAUSE: your reflection
 
-Finally:
+Format once you find the final answer.:
 Thought: I now know the final answer
 Final Answer: [your answer]
 
@@ -64,7 +65,7 @@ Important:
 """
 
     def _format_history(self, thought_process: List[ThoughtStep]) -> str:
-        history = "Below is the history of completed steps so far:\n---\n"
+        history = ""
         for step in thought_process:
             if step.pause_reflection:
                 history += f"PAUSE: {step.pause_reflection}\n"
@@ -74,7 +75,6 @@ Important:
                 history += f"Action: {step.action.model_dump_json()}\n"
             if step.observation:
                 history += f"Observation: {step.observation.result}\n"
-        history += "---\n"
         return history
 
     def execute_tool(self, action: Action) -> str:
@@ -121,7 +121,7 @@ Important:
             prompt = f"{self.system_prompt}\n\nQuestion: {query}\n\n"
             if thought_process:
                 prompt += self._format_history(thought_process)
-            prompt += "\nNow continue the next steps\n"
+            prompt += "\nNow continue with next steps by strictly following the required format.\n"
 
             # Print whole System Prompt once in the start
             if not printed_prompt:
