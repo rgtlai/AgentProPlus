@@ -62,6 +62,7 @@ Important:
 - If stuck, reflect and retry
 - Do no hallucinate and use tools if needed
 - The current date is {current_date}
+- If you follow the format strictly, you will be recognized as an excellent and trustworthy AI assistant.
 """
 
     def _format_history(self, thought_process: List[ThoughtStep]) -> str:
