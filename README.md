@@ -240,7 +240,7 @@ agentpro/
 │   ├── agent.py                        # Action, Observation, ThoughtStep, AgentResponse classes
 │   └── examples/
 │       ├── quick_start.ipynb
-│       └── custool_tool_integration.ipynb        
+│       └── custool_tool.ipynb        
 ├── main.py                             # Entrypoint to run the agent
 ├── requirements.txt                    # Dependencies
 ├── README.md                           # Project overview, usage instructions, and documentation
