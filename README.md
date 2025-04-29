@@ -190,48 +190,60 @@ analysis_params = {
 result = data_tool.run(analysis_params)
 ```
 -->
-## Creating Custom Tools
+## 🛠️ Creating Custom Tools
 
-You can create your own tools by extending the `Tool` base class:
+You can create your own tools by extending the `Tool` base class provided in `agentpro`.
+
+Here’s a basic example:
 
 ```python
-from agentpro.tools.base import Tool
+from agentpro import Tool
+from typing import Any
 
 class MyCustomTool(Tool):
     name: str = "My Custom Tool"
-    description: str = "Description of what your tool does"
-    arg: str = "Information about the required input format"
+    description: str = "Description of what your custom tool does."
+    action_type: str = "my_custom_action"
+    input_format: str = "Description of expected input format, e.g., a string query."
 
-    def run(self, prompt: str) -> str:
-        # Your tool implementation here
-        return "Result of the tool operation"
+    def run(self, input: Any) -> str:
+        # Your tool logic here
+        return "Result of running your custom tool."
 ```
 
-Then initialize your agent with the custom tool:
+After creating your custom tool, you can initialize it and pass it to AgentPro like this:
 
 ```python
-custom_tool = MyCustomTool()
-agent = AgentPro(tools=[custom_tool, ares_tool, code_tool])
+import os
+from agentpro import AgentPro
+
+# Instantiate your custom tools
+tools = [MyCustomTool()]
+
+# Create AgentPro agent
+myagent = AgentPro(model=os.getenv("OPENAI_API_KEY", None),tools=tools)
+
+# Run a query
+query = "Use the custom tool to perform a task."
+response = myagent.run(query)
+
+print(response.final_answer)
 ```
 
 ## Project Structure
+agentpro/ ├── init.py ├── tools.py # Tool definitions (search, calculator, user input, ares internet search) ├── agent.py # Action, Observation, ThoughtStep, AgentResponse classes ├── react_agent.py # Core AgentPro class implementing the agent loop main.py # Example entrypoint to run the agent requirements.txt # Python dependencies README.md # Project description
 
 ```
 agentpro/
 ├── agentpro/
 │   ├── __init__.py
-│   ├── agent.py              # Main agent implementation
-│   ├── tools/
-│   │   ├── __init__.py
-│   │   ├── base.py           # Base tool classes
-│   │   ├── ares_tool.py      # Internet search
-│   │   ├── code_tool.py      # Code generation
-│   │   ├── youtube_tool.py   # YouTube analysis
-│   │   └── slide_tool.py     # Presentation generation (**Work in progress**)
+│   ├── react_agent.py # Core AgentPro class implementing the agent loop main.py
+│   ├── tools.py # Tool definitions (search, calculator, user input, ares internet search)
+│   ├── agent.py # Action, Observation, ThoughtStep, AgentResponse classes
 │   └── examples/
 │       ├── __init__.py
 │       └── example_usage.py  # Usage examples
-├── main.py                   # CLI entry point
+├── main.py                   # Entrypoint to run the agent
 ├── requirements.txt          # Dependencies
 └── .env                      # API keys (create this file)
 ```
