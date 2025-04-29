@@ -1,3 +1,4 @@
+import os
 from agentpro import AgentPro
 from agentpro import DuckDuckGoTool, CalculateTool, UserInputTool, AresInternetTool
 
