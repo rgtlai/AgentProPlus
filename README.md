@@ -55,7 +55,8 @@ This starts an interactive session with the agent where you can enter queries. -
 ### Basic Usage
 ```python
 import os
-from agentpro import AgentPro, DuckDuckGoTool
+from agentpro import AgentPro
+from agentpro.tools import DuckDuckGoTool
 
 openai_api_key = os.getenv("OPENAI_API_KEY", None) # Make sure OpenAI key is set
 
@@ -195,7 +196,7 @@ You can create your own tools by extending the `Tool` base class provided in `ag
 Here’s a basic example:
 
 ```python
-from agentpro import Tool
+from agentpro.tools import Tool
 from typing import Any
 
 class MyCustomTool(Tool):
