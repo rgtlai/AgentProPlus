@@ -199,14 +199,15 @@ from agentpro import Tool
 from typing import Any
 
 class MyCustomTool(Tool):
-    name: str = "My Custom Tool"
-    description: str = "Description of what your custom tool does."
-    action_type: str = "my_custom_action"
-    input_format: str = "Description of expected input format, e.g., a string query."
+    name: str = "My Custom Tool"  # Human-readable name for the tool (used in documentation and debugging)
+    description: str = "Descriptio"  # Brief summary explaining the tool's functionality for agent
+    action_type: str = "my_custom_action"  # Unique identifier for the tool; lowercase with underscores for agent; avoid spaces, digits, special characters
+    input_format: str = "Description of expected input format, e.g., a string query."  # Instruction on what kind of input the tool expects with example
 
     def run(self, input: Any) -> str:
-        # Your tool logic here
-        return "Result of running your custom tool."
+        # your tool logic
+        return "Result of your custom tool."
+
 ```
 
 After creating your custom tool, you can initialize it and pass it to AgentPro like this:
