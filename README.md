@@ -244,8 +244,7 @@ agentpro/
 │       ├── __init__.py
 │       └── example_usage.py  # Usage examples
 ├── main.py                   # Entrypoint to run the agent
-├── requirements.txt          # Dependencies
-└── .env                      # API keys (create this file)
+└── requirements.txt          # Dependencies
 ```
 
 ## Requirements
