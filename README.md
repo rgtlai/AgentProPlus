@@ -1,7 +1,6 @@
 # AgentPro
 
 AgentPro is a lightweight ReAct-style agentic framework built in Python, designed for structured reasoning step-by-step using available tools, while maintaining a complete history of Thought → Action → Observation → PAUSE → Final Answer steps.
----
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.8%2B-blue" alt="Python 3.8+">
@@ -27,7 +26,7 @@ git clone https://github.com/traversaal-ai/AgentPro.git
 cd AgentPro
 pip install -r requirements.txt
 ```
-
+<!--
 ### Configuration
 
 Create a `.env` file in the root directory with your API keys:
@@ -51,7 +50,7 @@ From the command line:
 python main.py
 ```
 
-This starts an interactive session with the agent where you can enter queries.
+This starts an interactive session with the agent where you can enter queries. -->
 
 ### Basic Usage
 
