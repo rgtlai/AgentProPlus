@@ -244,6 +244,7 @@ agentpro/
 │       ├── calculator_tool.py
 │       ├── userinput_tool.py
 │       ├── ares_tool.py
+│       └── yfinance_tool.py
 │   └── examples/
 │       ├── quick_start.ipynb
 │       └── custool_tool.ipynb        
