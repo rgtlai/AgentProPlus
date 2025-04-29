@@ -1,6 +1,6 @@
 import os
 from agentpro import AgentPro
-from agentpro.tools import DuckDuckGoTool, CalculateTool, UserInputTool, AresInternetTool
+from agentpro.tools import DuckDuckGoTool, CalculateTool, UserInputTool, AresInternetTool, YFinanceTool
 
 
 def main():
@@ -10,7 +10,8 @@ def main():
             DuckDuckGoTool(),
             CalculateTool(),
             UserInputTool(),
-            AresInternetTool(api_key=os.getenv("ARES_API_KEY", None))
+            AresInternetTool(api_key=os.getenv("ARES_API_KEY", None)),
+            YFinanceTool()
         ]
         myagent = AgentPro(model=os.getenv("OPENAI_API_KEY", None), tools=tools, max_iterations=20)
         

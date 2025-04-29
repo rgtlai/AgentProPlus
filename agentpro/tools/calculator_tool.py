@@ -1,4 +1,4 @@
-from agentpro.tools.base_tool import Tool
+from .base_tool import Tool
 from typing import Any, Optional, Dict
 from abc import ABC, abstractmethod
 from pydantic import BaseModel, PrivateAttr
