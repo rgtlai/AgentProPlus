@@ -1,20 +1,20 @@
 # AgentPro
 
-AgentPro is a flexible framework for building AI agents with multiple specialized tools. This repository allows you to create powerful agents that can search the internet, generate code, analyze YouTube videos, create presentations, and more.
+AgentPro is a lightweight ReAct-style agentic framework built in Python, designed for structured reasoning step-by-step using available tools, while maintaining a complete history of Thought → Action → Observation → PAUSE → Final Answer steps.
+---
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.8%2B-blue" alt="Python 3.8+">
   <img src="https://img.shields.io/badge/License-Apache%202.0-blue" alt="License: Apache 2.0">
 </p>
 
-## Features
+## 📚 Features
 
-- 🧠 **Flexible Agent Architecture**: Built on the ReAct framework to combine reasoning and action
-- 🔧 **Modular Tool System**: Easily extend with custom tools
-- 🌐 **Internet Search**: Real-time web search using the Ares API
-- 💻 **Code Generation & Execution**: Generate and run Python code on-the-fly
-- 🎬 **YouTube Analysis**: Search, extract transcripts, and summarize YouTube videos
-- 📊 **Presentation Generation**: Create PowerPoint presentations automatically
+- 🔥 ReAct (Reasoning + Acting) agent pattern
+- 🛠️ Modular tool system (easy to add your own tools)
+- 📜 Clean Thought/Action/Observation/PAUSE parsing
+- 📦 Local package structure for easy extension
+- 🧠 Powered by OpenAI (GPT-4, GPT-3.5) via API
 
 ## Quick Start
 
@@ -56,12 +56,24 @@ This starts an interactive session with the agent where you can enter queries.
 ### Basic Usage
 
 ```python
-from agentpro import AgentPro, ares_tool, code_tool, youtube_tool
-agent = AgentPro(tools=[ares_tool, code_tool, youtube_tool])
+import os
+from agentpro import AgentPro, DuckDuckGoTool
+
+# Make sure OpenAI key is set
+openai_api_key = os.getenv("OPENAI_API_KEY", None)
+
+# Initialize tools
+tools = [DuckDuckGoTool()]
+
+# Initialize agent
+agent = AgentPro(model=openai_api_key, tools=tools)
 
 # Run a query
-response = agent("Generate a summary on the latest AI advancements")
-print(response)
+query = "Search the latest advancements in artificial intelligence"
+response = agent.run(query)
+
+print(response.final_answer)
+
 ```
 You can also use the [Quick Start](https://github.com/traversaal-ai/AgentPro/blob/main/agentpro/examples/Quick_Start.ipynb) Jupyter Notebook to run AgentPro directly in Colab.
 
@@ -79,7 +91,7 @@ This isn’t about flashy demos. We want to see domain-specific, usable, vertica
 - 📊 Data Analyst Agents
 - 💡 Or something totally original
 
-You can use any framework, but we recommend trying **[AgentPro](https://github.com/Traversaal/AgentPro)** — our open-source toolkit designed for rapid prototyping and robust architecture.
+You can use any framework, but we recommend trying **[AgentPro](https://github.com/traversaal-ai/AgentPro)** — our open-source toolkit designed for rapid prototyping and robust architecture.
 
 ### Key Dates
 
