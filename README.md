@@ -236,8 +236,14 @@ agentpro/
 ├── agentpro/
 │   ├── __init__.py
 │   ├── react_agent.py                  # Core AgentPro class implementing react-style agent framework
-│   ├── tools.py                        # Tool definitions (search, calculator, user input, ares internet search)
 │   ├── agent.py                        # Action, Observation, ThoughtStep, AgentResponse classes
+│   ├── tools/                          # folder for all tool classes
+│       ├── __init__.py
+│       ├── base_tool.py
+│       ├── duckduckgo_tool.py
+│       ├── calculator_tool.py
+│       ├── userinput_tool.py
+│       ├── ares_tool.py
 │   └── examples/
 │       ├── quick_start.ipynb
 │       └── custool_tool.ipynb        
