@@ -55,10 +55,9 @@ This starts an interactive session with the agent where you can enter queries. -
 ### Basic Usage
 ```python
 import os
-openai_api_key = os.getenv("OPENAI_API_KEY", None) # Make sure OpenAI key is set
-```
-```python
 from agentpro import AgentPro, DuckDuckGoTool
+
+openai_api_key = os.getenv("OPENAI_API_KEY", None) # Make sure OpenAI key is set
 
 # Initialize tools
 tools = [DuckDuckGoTool()]
