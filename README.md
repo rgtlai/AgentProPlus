@@ -251,7 +251,7 @@ agentpro/
 
 - Python 3.8+
 - OpenAI API key
-- Traversaal Ares API key (for internet search)
+- Traversaal Ares API key for internet search [Optional]
 
 ## License
 
