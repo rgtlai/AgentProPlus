@@ -237,7 +237,7 @@ agentpro/ ├── init.py ├── tools.py # Tool definitions (search, calcu
 agentpro/
 ├── agentpro/
 │   ├── __init__.py
-│   ├── react_agent.py        # Core AgentPro class implementing the agent loop main.py
+│   ├── react_agent.py        # Core AgentPro class implementing react-style agent framework
 │   ├── tools.py              # Tool definitions (search, calculator, user input, ares internet search)
 │   ├── agent.py              # Action, Observation, ThoughtStep, AgentResponse classes
 │   └── examples/
