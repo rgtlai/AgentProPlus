@@ -229,7 +229,6 @@ print(response.final_answer)
 ```
 
 ## Project Structure
-agentpro/ ├── init.py ├── tools.py # Tool definitions (search, calculator, user input, ares internet search) ├── agent.py # Action, Observation, ThoughtStep, AgentResponse classes ├── react_agent.py # Core AgentPro class implementing the agent loop main.py # Example entrypoint to run the agent requirements.txt # Python dependencies README.md # Project description
 
 ```
 agentpro/
