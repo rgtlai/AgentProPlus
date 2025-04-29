@@ -117,7 +117,7 @@ For more details, follow this [link](https://hackathon.traversaal.ai/)
 
 📩 Questions? Reach us at [hackathon-oai@traversaal.ai](hackathon-oai@traversaal.ai)
 
-
+<!--
 ## Data Science Agent
 https://github.com/user-attachments/assets/aeeb91e4-134e-4a14-bbc4-2523ba236c56
 
@@ -189,7 +189,7 @@ analysis_params = {
 }
 result = data_tool.run(analysis_params)
 ```
-
+-->
 ## Creating Custom Tools
 
 You can create your own tools by extending the `Tool` base class:
