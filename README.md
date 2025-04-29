@@ -235,16 +235,16 @@ agentpro/ ├── init.py ├── tools.py # Tool definitions (search, calcu
 agentpro/
 ├── agentpro/
 │   ├── __init__.py
-│   ├── react_agent.py        # Core AgentPro class implementing react-style agent framework
-│   ├── tools.py              # Tool definitions (search, calculator, user input, ares internet search)
-│   ├── agent.py              # Action, Observation, ThoughtStep, AgentResponse classes
+│   ├── react_agent.py                  # Core AgentPro class implementing react-style agent framework
+│   ├── tools.py                        # Tool definitions (search, calculator, user input, ares internet search)
+│   ├── agent.py                        # Action, Observation, ThoughtStep, AgentResponse classes
 │   └── examples/
-│       ├── __init__.py
-│       └── example_usage.py  # Usage examples
-├── main.py                   # Entrypoint to run the agent
-├── requirements.txt          # Dependencies
-├── README.md                 # Project overview, usage instructions, and documentation
-└── LICENSE.txt               # Open-source license information (Apache License 2.0)
+│       ├── quick_start.ipynb.
+│       └── custool_tool_integration.ipynb        
+├── main.py                             # Entrypoint to run the agent
+├── requirements.txt                    # Dependencies
+├── README.md                           # Project overview, usage instructions, and documentation
+└── LICENSE.txt                         # Open-source license information (Apache License 2.0)
 ```
 
 ## Requirements
