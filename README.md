@@ -239,7 +239,7 @@ agentpro/
 │   ├── tools.py                        # Tool definitions (search, calculator, user input, ares internet search)
 │   ├── agent.py                        # Action, Observation, ThoughtStep, AgentResponse classes
 │   └── examples/
-│       ├── quick_start.ipynb.
+│       ├── quick_start.ipynb
 │       └── custool_tool_integration.ipynb        
 ├── main.py                             # Entrypoint to run the agent
 ├── requirements.txt                    # Dependencies
