@@ -13,7 +13,7 @@ AgentPro is a lightweight ReAct-style agentic framework built in Python, designe
 - 🛠️ Modular tool system (easy to add your own tools)
 - 📜 Clean Thought/Action/Observation/PAUSE parsing
 - 📦 Local package structure for easy extension
-- 🧠 Powered by OpenAI (GPT-4, GPT-3.5) via API
+- 🧠 Powered by any LLM! (Anthropic, Open AI or any other Open source LLMs)
 
 ## Quick Start
 
