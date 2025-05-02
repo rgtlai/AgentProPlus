@@ -87,7 +87,7 @@ Important:
             raise ValueError("OpenAI client not initialized. Please provide openai_api_key.")
         
         response = self.client.chat.completions.create(
-            model="gpt-4",
+            model="gpt-4o",
             messages=[
                 {"role": "system", "content": self.system_prompt},
                 {"role": "user", "content": prompt}
