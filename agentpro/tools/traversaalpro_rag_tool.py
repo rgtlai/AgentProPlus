@@ -13,10 +13,10 @@ class TraversaalProRAGTool(Tool):
 
     _api_key: str = PrivateAttr(default="")
 
-    def __init__(self, api_key: Optional[str] = None, document_info: Optional[str] = None, **data):
-        if document_info:
+    def __init__(self, api_key: Optional[str] = None, document_names: Optional[str] = None, **data):
+        if document_names:
             data["description"] = (
-                f"Searches {document_info} documents using the Traversaal Pro RAG API and returns a context-aware answer and document excerpts."
+                f"Searches {document_names} documents using the Traversaal Pro RAG API and returns a context-aware answer and document excerpts."
             )
 
         super().__init__(**data)
@@ -24,12 +24,13 @@ class TraversaalProRAGTool(Tool):
         # Store the API key as a private attribute
         self._api_key = api_key or os.getenv("TRAVERSAAL_PRO_API_KEY", "")
         
+
+    def run(self, input_text: Any) -> str:
         # Validate API key
         if not self._api_key:
-            raise ValueError("API key is required. Provide it directly or set TRAVERSAAL_PRO_API_KEY environment variable.")
-
-    def run(self, input: Any) -> str:
-        if not isinstance(input, str):
+            return "❌ Error: API key is required. Provide it directly or set TRAVERSAAL_PRO_API_KEY environment variable."
+            
+        if not isinstance(input_text, str):
             return "❌ Error: Expected a query string. Example: 'chemical safety protocol'"
 
         url = "https://pro-documents.traversaal-api.com/documents/search"
@@ -39,7 +40,7 @@ class TraversaalProRAGTool(Tool):
         }
 
         payload = {
-            "query": input.strip("'\""),
+            "query": input_text.strip("'\""),
             "rag": True
         }
 
