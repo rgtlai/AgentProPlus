@@ -205,7 +205,7 @@ class MyCustomTool(Tool):
     action_type: str = "my_custom_action"  # Unique identifier for the tool; lowercase with underscores for agent; avoid spaces, digits, special characters
     input_format: str = "Description of expected input format, e.g., a string query."  # Instruction on what kind of input the tool expects with example
 
-    def run(self, input: Any) -> str:
+    def run(self, input_text: Any) -> str:
         # your tool logic
         return "Result of your custom tool."
 
