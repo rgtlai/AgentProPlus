@@ -7,7 +7,7 @@ import os
 
 class TraversaalProRAGTool(Tool):
     name: str = "Traversaal Pro RAG"
-    action_type: str = "traversaal_pro_rag"
+    action_type: str = "traversaalpro_rag"
     input_format: str = "A query string for document search. Example: 'chemical safety protocol'"
     description: str = "Searches documents using the Traversaal Pro RAG API and returns a context-aware answer and document excerpts."
 
