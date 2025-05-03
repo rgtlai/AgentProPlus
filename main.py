@@ -12,7 +12,7 @@ def main():
             UserInputTool(),
             YFinanceTool(),
             AresInternetTool(api_key=os.getenv("ARES_API_KEY", None)),
-            TraversaalProRAGTool(api_key=os.getenv("TRAVERSAAL_PRO_API_KEY", None), document_info="employee_safety_manual")
+            TraversaalProRAGTool(api_key=os.getenv("TRAVERSAAL_PRO_API_KEY", None), document_names="employee_safety_manual")
         ]
         myagent = AgentPro(model=os.getenv("OPENAI_API_KEY", None), tools=tools, max_iterations=20)
         
