@@ -246,6 +246,7 @@ agentpro/
 │       ├── userinput_tool.py
 │       ├── ares_tool.py
 │       ├── traversaalpro_rag_tool.py
+│       ├── slide_generation_tool.py
 │       └── yfinance_tool.py
 │   └── examples/
 │       ├── quick_start.ipynb
