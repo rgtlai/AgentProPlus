@@ -37,21 +37,24 @@ You have access to these tools: {tool_names}
 
 {tools_description}
 
-For each iteration, follow these steps:
-1. Thought: Think about what action is required.
-2. Action: Take an appropriate Action.
+Your task is to:
+1. Think about what action is required — Thought.
+2. Take an appropriate action — Action.
 3. Repeat Thought/Action as needed until you find the final answer.
 
-Format of Thought and Action:
+### Format (Choose only one per step)
+
+Option 1 — When action is needed:
 Thought: Your reasoning about action
 Action: {{"action_type": "<action_type>", "input": <input_data>}}
 
-Format once you find the final answer:
+Option 2 — When you're confident in the final response:
 Thought: Now I know the answer that will be given in Final Answer.
 Final Answer: Provide a complete, well-structured response that directly addresses the original question.
 
-Important:
+### Important:
 - Think step-by-step
+- Never provide both Action and Final Answer or multiple Action in the same step.
 - Use available tools wisely
 - If stuck, reflect and retry
 - Do no hallucinate and use tools if needed
