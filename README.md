@@ -201,7 +201,7 @@ from typing import Any
 
 class MyCustomTool(Tool):
     name: str = "My Custom Tool"  # Human-readable name for the tool (used in documentation and debugging)
-    description: str = "Descriptio"  # Brief summary explaining the tool's functionality for agent
+    description: str = "Description"  # Brief summary explaining the tool's functionality for agent
     action_type: str = "my_custom_action"  # Unique identifier for the tool; lowercase with underscores for agent; avoid spaces, digits, special characters
     input_format: str = "Description of expected input format, e.g., a string query."  # Instruction on what kind of input the tool expects with example
 
