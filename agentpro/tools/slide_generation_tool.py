@@ -41,6 +41,8 @@ class SlideGenerationTool(Tool):
             title = input_data.get('title', 'Untitled Presentation')
             slides = input_data.get('slides', [])
             filename = input_data.get('filename', f"{title.replace(' ', '_')}.pptx")
+            if not filename.endswith('.pptx'):
+                filename += '.pptx'
             
             # Create presentation
             prs = Presentation()
