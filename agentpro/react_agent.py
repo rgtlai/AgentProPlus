@@ -10,7 +10,7 @@ from datetime import datetime
 
 
 
-class AgentPro:
+class ReactAgent:
     def __init__(self, model: str = None, tools: List[Tool] = None, max_iterations: int = 20):
 
         if model:
