@@ -9,6 +9,7 @@ def main():
         # Set up argument parser
         parser = argparse.ArgumentParser(description='Run AgentPro with a query')
         parser.add_argument('input_text', type=str, help='The query to process')
+        parser.add_argument('--system_prompt', type=str, help='Custom system prompt for the agent', default=None)
         args = parser.parse_args()
         
         # Instantiate your tools
@@ -21,7 +22,7 @@ def main():
             AresInternetTool(api_key=os.getenv("ARES_API_KEY", None)),
             # TraversaalProRAGTool(api_key=os.getenv("TRAVERSAAL_PRO_API_KEY", None), document_names="employee_safety_manual"),
         ]
-        myagent = ReactAgent(model=os.getenv("OPENAI_API_KEY", None), tools=tools, custom_system_prompt=None, max_iterations=20)
+        myagent = ReactAgent(model=os.getenv("OPENAI_API_KEY", None), tools=tools, custom_system_prompt=args.system_prompt, max_iterations=20)
         
         query = args.input_text
         response = myagent.run(query)
