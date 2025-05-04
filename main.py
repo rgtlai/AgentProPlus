@@ -1,6 +1,6 @@
 import os
 import argparse
-from agentpro import AgentPro
+from agentpro import ReactAgent
 from agentpro.tools import DuckDuckGoTool, CalculateTool, UserInputTool, AresInternetTool, YFinanceTool, TraversaalProRAGTool, SlideGenerationTool
 
 
@@ -21,7 +21,7 @@ def main():
             AresInternetTool(api_key=os.getenv("ARES_API_KEY", None)),
             # TraversaalProRAGTool(api_key=os.getenv("TRAVERSAAL_PRO_API_KEY", None), document_names="employee_safety_manual"),
         ]
-        myagent = AgentPro(model=os.getenv("OPENAI_API_KEY", None), tools=tools, max_iterations=20)
+        myagent = ReactAgent(model=os.getenv("OPENAI_API_KEY", None), tools=tools, max_iterations=20)
         
         query = args.input_text
         response = myagent.run(query)
