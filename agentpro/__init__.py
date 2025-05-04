@@ -1,1 +1,1 @@
-from .react_agent import AgentPro
+from .react_agent import ReactAgent
