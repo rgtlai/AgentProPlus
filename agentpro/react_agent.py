@@ -11,7 +11,7 @@ from datetime import datetime
 
 
 class ReactAgent:
-    def __init__(self, model: str = None, tools: List[Tool] = None, max_iterations: int = 20):
+    def __init__(self, model: str = None, tools: List[Tool] = None, custom_system_prompt: str = None, max_iterations: int = 20):
 
         if model:
             self.client = openai.OpenAI(api_key=model)
@@ -28,9 +28,17 @@ class ReactAgent:
         tool_names = ", ".join(tool.action_type for tool in self.tools)
 
         # Get current date here
-        current_date = datetime.now().strftime("%B %d, %Y") 
+        current_date = datetime.now().strftime("%B %d, %Y")
 
-        self.system_prompt = f"""You are an AI assistant that follows the ReAct (Reasoning + Acting) pattern.
+        # Default opening sentence
+        default_opening = "You are an AI assistant that follows the ReAct (Reasoning + Acting) pattern."
+        # Use custom system prompt if provided, otherwise use the default
+        if custom_system_prompt:
+            user_system_prompt = custom_system_prompt
+        else:
+            user_system_prompt = default_opening
+
+        self.system_prompt = f"""{user_system_prompt}
 Your goal is to help users by breaking down complex tasks into a series of thought-out steps and actions.
 
 You have access to these tools: {tool_names}
