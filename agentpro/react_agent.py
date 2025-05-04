@@ -39,6 +39,7 @@ class ReactAgent:
             user_system_prompt = default_opening
 
         self.system_prompt = f"""{user_system_prompt}
+        
 Your goal is to help users by breaking down complex tasks into a series of thought-out steps and actions.
 
 You have access to these tools: {tool_names}
