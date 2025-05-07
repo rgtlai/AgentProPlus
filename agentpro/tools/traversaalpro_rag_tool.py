@@ -48,7 +48,7 @@ class TraversaalProRAGTool(Tool):
 
         payload = {
             "query": input_text.strip("'\""),
-            "rag": True
+            "rag": False
         }
 
         try:
@@ -57,28 +57,30 @@ class TraversaalProRAGTool(Tool):
             response.raise_for_status()  # This will raise an exception for HTTP error codes
 
             result = response.json()
+
+            return result
             
-            # Use the correct keys from the response
-            answer = result.get("response", "").strip()
-            references = result.get("references", [])
+            # # Use the correct keys from the response
+            # answer = result.get("response", "").strip()
+            # references = result.get("references", [])
 
-            if not answer:
-                return "No answer found for this query. Please try a different question."
+            # if not answer:
+            #     return "No answer found for this query. Please try a different question."
 
-            output = f"**Answer:**\n{answer}\n\n"
+            # output = f"**Answer:**\n{answer}\n\n"
 
-            if references:
-                output += "**Source Document Snippets:**\n"
-                for idx, ref in enumerate(references, 1):
-                    file_id = ref.get("file_id", "Unknown")
-                    s3_key = ref.get("s3_bucket_key", "")
-                    file_name = s3_key.split("/")[-1] if s3_key else "Unknown Document"
-                    snippet = ref.get("chunk_text", "").strip()
-                    score = ref.get("score", 0)
+            # if references:
+            #     output += "**Source Document Snippets:**\n"
+            #     for idx, ref in enumerate(references, 1):
+            #         file_id = ref.get("file_id", "Unknown")
+            #         s3_key = ref.get("s3_bucket_key", "")
+            #         file_name = s3_key.split("/")[-1] if s3_key else "Unknown Document"
+            #         snippet = ref.get("chunk_text", "").strip()
+            #         score = ref.get("score", 0)
                     
-                    output += f"{idx}. *{file_name}* (Relevance: {score:.2f})\n{snippet[:500]}...\n\n"
+            #         output += f"{idx}. *{file_name}* (Relevance: {score:.2f})\n{snippet}...\n\n"
 
-            return output.strip()
+            # return output.strip()
 
         except requests.exceptions.Timeout:
             return "❌ Error: The request timed out. Please try again later or with a simpler query."
