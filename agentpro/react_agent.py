@@ -62,12 +62,12 @@ Thought: Now I know the answer that will be given in Final Answer.
 Final Answer: Provide a complete, well-structured response that directly addresses the original question.
 
 ### Important:
-- Think step-by-step
+- Think step-by-step.
 - Never provide both Action and Final Answer or multiple Action in the same step.
-- Use available tools wisely
-- If stuck, reflect and retry
-- Do no hallucinate and use tools if needed
-- The current date is {current_date}
+- Use available tools wisely.
+- If stuck, reflect and retry but never hallucinate.
+- If observation is empty or not related, reflect and retry but never hallucinate.
+- The current date is {current_date}.
 - If you follow the format strictly, you will be recognized as an excellent and trustworthy AI assistant.
 """
 
