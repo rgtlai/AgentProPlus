@@ -65,7 +65,7 @@ tools = [DuckDuckGoTool()]
 agent = ReactAgent(model=openai_api_key, tools=tools)
 
 # Run a query
-query = "Search the latest advancements in artificial intelligence"
+query = "What is the height of the Eiffel Tower?"
 response = agent.run(query)
 
 print(response.final_answer)
