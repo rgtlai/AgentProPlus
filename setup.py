@@ -23,7 +23,8 @@ setup(
         "openpyxl",
         "pyarrow",
         "scikit-learn",
-        "yfinance"
+        "yfinance",
+        "litellm"
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
