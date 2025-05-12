@@ -54,22 +54,23 @@ This starts an interactive session with the agent where you can enter queries. -
 ```python
 import os
 from agentpro import ReactAgent
-from agentpro.tools import DuckDuckGoTool
+from agentpro.tools import QuickInternetTool
+from agentpro import create_model
 
-openai_api_key = os.getenv("OPENAI_API_KEY", None) # Make sure OpenAI key is set
+# Create a model with OpenAI
+model = create_model(provider="openai", model_name="gpt-4o", api_key=os.getenv("OPENAI_API_KEY", None))
 
 # Initialize tools
-tools = [DuckDuckGoTool()]
+tools = [QuickInternetTool()]
 
 # Initialize agent
-agent = ReactAgent(model=openai_api_key, tools=tools)
+agent = ReactAgent(model=model, tools=tools)
 
 # Run a query
 query = "What is the height of the Eiffel Tower?"
 response = agent.run(query)
 
 print(response.final_answer)
-
 ```
 You can also use the [Quick Start](https://github.com/traversaal-ai/AgentPro/blob/main/agentpro/examples/quick_start.ipynb) Jupyter Notebook to run AgentPro directly in Colab.
 
