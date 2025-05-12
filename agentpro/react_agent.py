@@ -1,9 +1,10 @@
-from typing import List
+from typing import List, Optional
 import requests
 import json
 import openai
 from .tools import Tool
 from .agent import Action, Observation, ThoughtStep, AgentResponse
+from .model import ModelClient, create_model
 
 import re
 from datetime import datetime
@@ -11,12 +12,9 @@ from datetime import datetime
 
 
 class ReactAgent:
-    def __init__(self, model: str = None, tools: List[Tool] = None, custom_system_prompt: str = None, max_iterations: int = 20):
+    def __init__(self, model: Optional[ModelClient] = None, tools: List[Tool] = None, custom_system_prompt: str = None, max_iterations: int = 20):
 
-        if model:
-            self.client = openai.OpenAI(api_key=model)
-        else:
-            self.client = None
+        self.client = model or create_model(provider="openai")
 
         self.max_iterations = max_iterations
 
@@ -94,19 +92,15 @@ Final Answer: Provide a complete, well-structured response that directly address
         except Exception as e:
             return f"Error running tool '{action.action_type}': {e}"
 
-    def _get_openai_response(self, prompt: str) -> str:
+    def _get_llm_response(self, prompt: str) -> str:
         if not self.client:
-            raise ValueError("OpenAI client not initialized. Please provide openai_api_key.")
+            raise ValueError("❌ LLM client not initialized")
         
-        response = self.client.chat.completions.create(
-            model="gpt-4o",
-            messages=[
-                {"role": "system", "content": self.system_prompt},
-                {"role": "user", "content": prompt}
-            ],
+        return self.client.chat_completion(
+            system_prompt=self.system_prompt,
+            user_prompt=prompt,
             temperature=0.7
-        )
-        return response.choices[0].message.content
+            )
 
     def run(self, query: str) -> AgentResponse:
         thought_process: List[ThoughtStep] = []
@@ -139,7 +133,7 @@ Final Answer: Provide a complete, well-structured response that directly address
 
             # Run LLM model
             if self.client:
-                step_text = self._get_openai_response(prompt)
+                step_text = self._get_llm_response(prompt)
             else:
                 return AgentResponse(
                     thought_process=thought_process,

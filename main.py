@@ -2,7 +2,7 @@ import os
 import argparse
 from agentpro import ReactAgent
 from agentpro.tools import DuckDuckGoTool, CalculateTool, UserInputTool, AresInternetTool, YFinanceTool, TraversaalProRAGTool, SlideGenerationTool
-
+from agentpro import create_model
 
 def main():
     try:
@@ -11,6 +11,14 @@ def main():
         parser.add_argument('input_text', type=str, help='The query to process')
         parser.add_argument('--system_prompt', type=str, help='Custom system prompt for the agent', default=None)
         args = parser.parse_args()
+
+        # Create a model with LiteLLM
+        litellm_model = create_model(
+            provider="litellm",
+            model_name="gpt-4o",
+            api_key=os.getenv("OPENAI_API_KEY", None),
+            litellm_provider="openai"
+        )
         
         # Instantiate your tools
         tools = [
@@ -22,7 +30,7 @@ def main():
             AresInternetTool(api_key=os.getenv("ARES_API_KEY", None)),
             # TraversaalProRAGTool(api_key=os.getenv("TRAVERSAAL_PRO_API_KEY", None), document_names="employee_safety_manual"),
         ]
-        myagent = ReactAgent(model=os.getenv("OPENAI_API_KEY", None), tools=tools, custom_system_prompt=args.system_prompt, max_iterations=20)
+        myagent = ReactAgent(model=litellm_model, tools=tools, custom_system_prompt=args.system_prompt, max_iterations=20)
         
         query = args.input_text
         response = myagent.run(query)
