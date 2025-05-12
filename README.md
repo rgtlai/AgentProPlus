@@ -22,7 +22,7 @@ AgentPro is a lightweight ReAct-style agentic framework built in Python, designe
 Install agentpro repository using pip:
 
 ```bash
-pip install git+https://github.com/traversaal-ai/AgentPro.git
+pip install git+https://github.com/traversaal-ai/AgentPro.git -q
 ```
 <!--
 ### Configuration
