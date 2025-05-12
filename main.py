@@ -1,7 +1,7 @@
 import os
 import argparse
 from agentpro import ReactAgent
-from agentpro.tools import DuckDuckGoTool, CalculateTool, UserInputTool, AresInternetTool, YFinanceTool, TraversaalProRAGTool, SlideGenerationTool
+from agentpro.tools import QuickInternetTool, CalculateTool, UserInputTool, AresInternetTool, YFinanceTool, TraversaalProRAGTool, SlideGenerationTool
 from agentpro import create_model
 
 def main():
@@ -22,7 +22,7 @@ def main():
         
         # Instantiate your tools
         tools = [
-            DuckDuckGoTool(),
+            QuickInternetTool(),
             CalculateTool(),
             UserInputTool(),
             YFinanceTool(),

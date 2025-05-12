@@ -9,7 +9,7 @@ import os
 
 class AresInternetTool(Tool):
     name: str = "Ares Internet Search"
-    description: str = "Uses Ares API to search live information from the internet and returns a clean summary and related links."
+    description: str = "Uses Ares API to search live and detailed information from the internet and returns a clean summary and related links."
     action_type: str = "ares_internet_search"
     input_format: str = "A search query as a string. Example: 'Best restaurants in San Francisco'"
 

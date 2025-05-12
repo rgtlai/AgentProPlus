@@ -17,9 +17,9 @@ except ImportError:
 
 
 # DuckDuckGo search tool
-class DuckDuckGoTool(Tool):
-    name: str = "DuckDuckGo Search"
-    description: str = "Searches internet using DuckDuckGo for a given query and returns top 5 results."
+class QuickInternetTool(Tool):
+    name: str = "Quick Internet Search"
+    description: str = "Searches internet quickly using DuckDuckGo for a given query and returns top 5 results."
     action_type: str = "search"
     input_format: str = "A search query as a string. Example: 'Latest advancements in AI'"
 

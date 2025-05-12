@@ -1,5 +1,5 @@
 from .base_tool import Tool
-from .duckduckgo_tool import DuckDuckGoTool
+from .duckduckgo_tool import QuickInternetTool
 from .calculator_tool import CalculateTool
 from .userinput_tool import UserInputTool
 from .ares_tool import AresInternetTool
@@ -9,7 +9,7 @@ from .slide_generation_tool import SlideGenerationTool
 
 __all__ = [
     "Tool",
-    "DuckDuckGoTool",
+    "QuickInternetTool",
     "CalculateTool",
     "UserInputTool",
     "AresInternetTool",
