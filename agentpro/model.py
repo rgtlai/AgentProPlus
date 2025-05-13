@@ -29,31 +29,7 @@ class OpenAIClient(ModelClient):
             temperature=temperature
         )
         return response.choices[0].message.content
-
-class OpenRouterClient(ModelClient):
-    """Client for OpenRouter API"""
-    def __init__(self, api_key: str = None, model_name: str = "anthropic/claude-3-opus"):
-        super().__init__(model_name=model_name)
-        self.api_key = api_key or os.environ.get("OPENROUTER_API_KEY")
-        # Configure OpenRouter
-        openai.api_key = self.api_key
-        openai.base_url = "https://openrouter.ai/api/v1"
-        self.client = openai.OpenAI()
-    
-    def chat_completion(self, system_prompt: str, user_prompt: str, temperature: float = 0.7) -> str:
-        response = self.client.chat.completions.create(
-            model=self.model_name,
-            messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt}
-            ],
-            temperature=temperature,
-            headers={
-                "HTTP-Referer": "https://your-app-url.com",  # Replace with your actual URL
-                "X-Title": "Your Application Name"  # Replace with your app name
-            }
-        )
-        return response.choices[0].message.content
+        
 
 class LiteLLMClient(ModelClient):
     """Client for LiteLLM which supports multiple providers"""
@@ -112,8 +88,6 @@ class ModelConfig:
         if not self.model_name:
             if self.provider == "openai":
                 self.model_name = "gpt-4o"
-            elif self.provider == "openrouter":
-                self.model_name = "anthropic/claude-3-opus"
             elif self.provider == "litellm":
                 self.model_name = "gpt-4o"
         
@@ -121,8 +95,6 @@ class ModelConfig:
         """Create and return a model client based on this configuration"""
         if self.provider == "openai":
             return OpenAIClient(api_key=self.api_key, model_name=self.model_name)
-        elif self.provider == "openrouter":
-            return OpenRouterClient(api_key=self.api_key, model_name=self.model_name)
         elif self.provider == "litellm":
             return LiteLLMClient(
                 api_key=self.api_key, 
@@ -143,7 +115,7 @@ def create_model(
     Create and return a model client with the specified configuration
     
     Args:
-        provider: The LLM provider (openai, openrouter, litellm)
+        provider: The LLM provider (openai, litellm)
         model_name: The specific model to use
         api_key: The API key for the provider
         litellm_provider: For litellm, the specific provider to use
