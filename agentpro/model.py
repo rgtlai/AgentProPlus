@@ -109,7 +109,7 @@ def create_model(
     model_name: str = None,
     api_key: str = None,
     litellm_provider: str = None,
-    temperature: float = 0.7
+    temperature: float = 0.3
 ) -> ModelClient:
     """
     Create and return a model client with the specified configuration
