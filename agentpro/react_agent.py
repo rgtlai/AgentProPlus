@@ -220,8 +220,8 @@ Final Answer: Provide a complete, well-structured response that directly address
                     
                     error_message = (
                         f"Error parsing LLM response: {e}\n"
-                        f"Raw step text: {step_text}\n"
-                        "Strictly follow the format (choose only one per step)\n\n"
+                        f"Response: {step_text}\n\n"
+                        "### Response format (choose only one per step)\n\n"
                         "Option 1 — When action is needed:\n"
                         "Thought: Your reasoning about action\n"
                         "Action: {\"action_type\": \"<action_type>\", \"input\": <input_data>}\n\n"
@@ -237,10 +237,10 @@ Final Answer: Provide a complete, well-structured response that directly address
     
                     # Record the thought step with the error observation
                     thought_process.append(ThoughtStep(
-                        thought="Error occurred while processing the response",
-                        action=action,
+                        thought=None,
+                        action=None,
                         observation=observation,
-                        pause_reflection=pause_reflection
+                        pause_reflection=None
                         ))
                     # Continue to the next iteration instead of returning
         
