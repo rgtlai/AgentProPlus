@@ -215,13 +215,34 @@ Final Answer: Provide a complete, well-structured response that directly address
                         pause_reflection=pause_reflection
                     ))
                 except Exception as e:
-                    print(f"Error parsing LLM response: {e}")
-                    print(f"Raw step text: {step_text}")
-                    return AgentResponse(
-                        thought_process=thought_process,
-                        final_answer="Error: Failed to parse LLM response"
-                    )
-        # If exceeded max steps
+                    print(f"❌ Error parsing LLM response: {e}")
+                    print(f"❌ Raw step text: {step_text}")
+                    
+                    error_message = (
+                        f"Error parsing LLM response: {e}\n"
+                        f"Raw step text: {step_text}\n"
+                        "### Format (Choose only one per step)\n\n"
+                        "Option 1 — When action is needed:\n"
+                        "Thought: Your reasoning about action\n"
+                        "Action: {\"action_type\": \"<action_type>\", \"input\": <input_data>}\n\n"
+                        "Option 2 — When you're confident in the final response:\n"
+                        "Thought: Now I know the answer that will be given in Final Answer.\n"
+                        "Final Answer: Provide a complete, well-structured response that directly addresses the original question."
+                        )
+                    
+                    # Add error as an observation
+                    observation = Observation(result=error_message)
+    
+                    # Record the thought step with the error observation
+                    thought_process.append(ThoughtStep(
+                        thought="Error occurred while processing the response",
+                        action=action,
+                        observation=observation,
+                        pause_reflection=pause_reflection
+                        ))
+                    # Continue to the next iteration instead of returning
+        
+        # # If exceeded max steps
         return AgentResponse(
             thought_process=thought_process,
             final_answer="❌ Stopped after reaching maximum iterations limit."
