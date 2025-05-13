@@ -49,7 +49,7 @@ Your task is to:
 2. Take an appropriate action — Action.
 3. Repeat Thought/Action as needed until you find the final answer.
 
-### Format (Choose only one per step)
+### Format (Choose only one per response)
 
 Option 1 — When action is needed:
 Thought: Your reasoning about action and observation.
@@ -61,7 +61,7 @@ Final Answer: Provide a complete, well-structured response that directly address
 
 ### Important:
 - Think step-by-step.
-- Never provide both Action and Final Answer or multiple Action in the same step.
+- Never provide both Action and Final Answer or multiple Action in the same response.
 - Use available tools wisely.
 - If stuck, reflect and retry but never hallucinate.
 - If observation is empty or not related, reflect and retry but never hallucinate.
