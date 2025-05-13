@@ -52,7 +52,7 @@ Your task is to:
 ### Format (Choose only one per step)
 
 Option 1 — When action is needed:
-Thought: Your reasoning about action
+Thought: Your reasoning about action and observation.
 Action: {{"action_type": "<action_type>", "input": <input_data>}}
 
 Option 2 — When you're confident in the final response:
