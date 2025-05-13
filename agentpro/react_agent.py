@@ -143,7 +143,7 @@ Final Answer: Provide a complete, well-structured response that directly address
             print("🤖 [Debug] Step LLM Response:")
             print(step_text)
             
-            if "Final Answer:" in step_text:
+            if "Final Answer:" in step_text and "Action:" not in step_text:
                 # Try to find last Thought before Final Answer
                 thought_match = re.search(r"Thought:\s*(.*?)(?:Action:|PAUSE:|Final Answer:|$)", step_text, re.DOTALL)
                 pause_match = re.search(r"PAUSE:\s*(.*?)(?:Thought:|Action:|Final Answer:|$)", step_text, re.DOTALL)
