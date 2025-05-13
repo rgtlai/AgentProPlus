@@ -241,6 +241,7 @@ agentpro/
 │   ├── __init__.py
 │   ├── react_agent.py                  # Core AgentPro class implementing react-style agent framework
 │   ├── agent.py                        # Action, Observation, ThoughtStep, AgentResponse classes
+│   ├── model.py                        # Model classes 
 │   ├── tools/                          # folder for all tool classes
 │       ├── __init__.py
 │       ├── base_tool.py
