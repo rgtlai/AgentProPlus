@@ -215,12 +215,16 @@ After creating your custom tool, you can initialize it and pass it to AgentPro l
 ```python
 import os
 from agentpro import ReactAgent
+from agentpro import create_model
+
+# Create a model with OpenAI
+model = create_model(provider="openai", model_name="gpt-4o", api_key=os.getenv("OPENAI_API_KEY", None))
 
 # Instantiate your custom tools
 tools = [MyCustomTool()]
 
 # Create AgentPro React agent
-myagent = ReactAgent(model=os.getenv("OPENAI_API_KEY", None),tools=tools)
+myagent = ReactAgent(model=model,tools=tools)
 
 # Run a query
 query = "Use the custom tool to perform a task."
