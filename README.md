@@ -163,7 +163,7 @@ print(response.final_answer)
 ## Project Structure
 
 ```
-agentpro/
+AgentPro/
 ├── agentpro/
 │   ├── __init__.py
 │   ├── react_agent.py                  # Core AgentPro class implementing react-style agent framework
@@ -179,12 +179,15 @@ agentpro/
 │       ├── traversaalpro_rag_tool.py
 │       ├── slide_generation_tool.py
 │       └── yfinance_tool.py
-│   └── examples/
-│       ├── quick_start.ipynb
-│       └── custool_tool.ipynb        
+├── cookbook/
+│   ├── Traversaal x Optimized AI Hackathon 2025
+│   ├── quick_start.ipynb
+│   └── custool_tool.ipynb      
 ├── main.py                             # Entrypoint to run the agent
 ├── requirements.txt                    # Dependencies
 ├── README.md                           # Project overview, usage instructions, and documentation
+├── setup.py       
+├── pyproject.toml     
 └── LICENSE.txt                         # Open-source license information (Apache License 2.0)
 ```
 
