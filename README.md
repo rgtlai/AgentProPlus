@@ -72,7 +72,7 @@ response = agent.run(query)
 
 print(response.final_answer)
 ```
-You can also use the [Quick Start](https://github.com/traversaal-ai/AgentPro/blob/main/agentpro/examples/quick_start.ipynb) Jupyter Notebook to run AgentPro directly in Colab.
+You can also use the [Quick Start](https://github.com/traversaal-ai/AgentPro/blob/main/cookbook/quick_start.ipynb) Jupyter Notebook to run AgentPro directly in Colab.
 
 ## 🌍 Traversaal x Optimized AI Hackathon 2025
 
