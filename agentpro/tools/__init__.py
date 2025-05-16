@@ -14,6 +14,6 @@ __all__ = [
     "UserInputTool",
     "AresInternetTool",
     "YFinanceTool",
-    "TraversaalProRAGTool"
+    "TraversaalProRAGTool",
     "SlideGenerationTool"
 ]
