@@ -72,14 +72,15 @@ response = agent.run(query)
 
 print(response.final_answer)
 ```
-For Ares api keyinternet tool, follow these steps:
+For Ares api key, follow these steps:
 
 1. Go to the [Traversaal API platform](https://api.traversaal.ai/)
 2. Log in or create an account
 3. Generate your Ares API key from the dashboard.
-   
-You can also use the [Quick Start](https://github.com/traversaal-ai/AgentPro/blob/main/cookbook/quick_start.ipynb) Jupyter Notebook to run AgentPro directly in Colab.
 
+<!--
+You can also use the [Quick Start](https://github.com/traversaal-ai/AgentPro/blob/main/cookbook/quick_start.ipynb) Jupyter Notebook to run AgentPro directly in Colab.
+-->
 ## 🌍 Traversaal x Optimized AI Hackathon 2025
 
 We’re teaming up with the **Optimized AI Conference 2025** to host a **global hackathon on AI Agents** — open to all developers, builders, researchers, and dreamers working on intelligent systems.
