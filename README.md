@@ -54,14 +54,14 @@ This starts an interactive session with the agent where you can enter queries. -
 ```python
 import os
 from agentpro import ReactAgent
-from agentpro.tools import QuickInternetTool
+from agentpro.tools import AresInternetTool
 from agentpro import create_model
 
 # Create a model with OpenAI
 model = create_model(provider="openai", model_name="gpt-4o", api_key=os.getenv("OPENAI_API_KEY", None))
 
 # Initialize tools
-tools = [QuickInternetTool()]
+tools = [AresInternetTool(os.getenv("ARES_API_KEY", None))]
 
 # Initialize agent
 agent = ReactAgent(model=model, tools=tools)
