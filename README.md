@@ -70,7 +70,7 @@ agent = ReactAgent(model=model, tools=tools)
 query = "What is the height of the Eiffel Tower?"
 response = agent.run(query)
 
-print(response.final_answer)
+print(f"\nFinal Answer: {response.final_answer}")
 ```
 For Ares api key, follow these steps:
 
