@@ -99,7 +99,6 @@ Final Answer: Provide a complete, well-structured response that directly address
         return self.client.chat_completion(
             system_prompt=self.system_prompt,
             user_prompt=prompt,
-            temperature=0.7
             )
 
     def run(self, query: str) -> AgentResponse:

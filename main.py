@@ -17,7 +17,9 @@ def main():
             provider="litellm",
             model_name="gpt-4o",
             api_key=os.getenv("OPENAI_API_KEY", None),
-            litellm_provider="openai"
+            litellm_provider="openai",
+            temperature=0.7,
+            max_tokens=2048
         )
         
         # Instantiate your tools
