@@ -61,7 +61,7 @@ class LiteLLMClient(ModelClient):
         elif self.litellm_provider == "anthropic":
             os.environ["ANTHROPIC_API_KEY"] = self.api_key or os.environ.get("ANTHROPIC_API_KEY", "")
         elif self.litellm_provider == "gemini":
-            os.environ["GOOGLE_API_KEY"] = self.api_key or os.environ.get("GOOGLE_API_KEY", "")
+            os.environ["GEMINI_API_KEY"] = self.api_key or os.environ.get("GEMINI_API_KEY", "")
         elif self.litellm_provider == "openrouter":
             os.environ["OPENROUTER_API_KEY"] = self.api_key or os.environ.get("OPENROUTER_API_KEY", "")
         # Add other providers as needed
