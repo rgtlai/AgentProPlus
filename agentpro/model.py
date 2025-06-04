@@ -79,11 +79,7 @@ class LiteLLMClient(ModelClient):
         ]
         
         # If a specific provider is defined, use it
-        model_param = self.model_name
-        if self.litellm_provider:
-            # For some providers, LiteLLM needs format: "provider/model"
-            if self.litellm_provider not in self.model_name:
-                model_param = f"{self.litellm_provider}/{self.model_name}"
+        model_param = f"{self.litellm_provider}/{self.model_name}"
         
         response = litellm.completion(
             model=model_param,
