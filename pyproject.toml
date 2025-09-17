@@ -1,3 +1,40 @@
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools>=61", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentpro"
+version = "0.1.0"
+description = "AgentPro: Traversaal Agentic Framework"
+readme = "README.md"
+requires-python = ">=3.12"
+license = {file = "LICENSE.txt"}
+authors = [{name = "Traversaal AI", email = "contact@traversaal.ai"}]
+dependencies = [
+    "openai",
+    "youtube_transcript_api",
+    "duckduckgo-search",
+    "requests",
+    "python-pptx",
+    "pydantic",
+    "python-dotenv",
+    "pandas",
+    "numpy",
+    "matplotlib",
+    "seaborn",
+    "openpyxl",
+    "pyarrow",
+    "scikit-learn",
+    "yfinance",
+    "litellm",
+    "transformers>=4.56.1",
+    "torch>=2.8.0",
+    "accelerate>=1.10.1",
+]
+
+[project.urls]
+Homepage = "https://github.com/traversaal-ai/AgentPro"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["agentpro", "agentpro.*"]
