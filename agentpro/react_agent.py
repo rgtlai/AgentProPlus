@@ -1,7 +1,5 @@
-from typing import List, Optional
-import requests
+from typing import List, Optional, Any
 import json
-import openai
 from .tools import Tool
 from .agent import Action, Observation, ThoughtStep, AgentResponse
 from .model import ModelClient, create_model
@@ -100,6 +98,191 @@ Final Answer: Provide a complete, well-structured response that directly address
             system_prompt=self.system_prompt,
             user_prompt=prompt,
             )
+
+    def run_stream(
+        self,
+        query: str,
+    ):
+        """
+        Synchronous generator that yields structured events for streaming UIs.
+        Each yield returns a dict describing the event.
+        """
+        thought_process: List[ThoughtStep] = []
+        printed_prompt = False
+        iterations_count = 0
+
+        def model_to_dict(model: Any) -> Any:
+            if model is None:
+                return None
+            if hasattr(model, "model_dump"):
+                try:
+                    return model.model_dump(mode="json")
+                except TypeError:
+                    return model.model_dump()
+            if hasattr(model, "dict"):
+                return model.dict()
+            return model
+
+        while iterations_count < self.max_iterations:
+            iterations_count += 1
+            print("=" * 50 + f" Iteration {iterations_count} ")
+
+            thought = None
+            action = None
+            observation = None
+            pause_reflection = None
+
+            prompt = f"{self.system_prompt}\n\nQuestion: {query}\n\n"
+            if thought_process:
+                prompt += self._format_history(thought_process)
+            prompt += "\nNow continue with next steps by strictly following the required format.\n"
+
+            if not printed_prompt:
+                print("✅  [Debug] Sending System Prompt (with history) to LLM:")
+                print(prompt)
+                print("=" * 50)
+                printed_prompt = True
+
+            yield {"type": "prompt", "prompt": prompt, "iteration": iterations_count}
+
+            if not self.client:
+                response = AgentResponse(
+                    thought_process=thought_process,
+                    final_answer="❌ No LLM is Connected. Please set and pass the OPENAI_API_KEY to AgentPro."
+                )
+                yield {"type": "complete", "response": model_to_dict(response)}
+                return
+
+            stream_method = getattr(self.client, "chat_completion_stream", None)
+            step_text = ""
+            llm_response_emitted = False
+
+            if callable(stream_method):
+                try:
+                    for chunk in stream_method(
+                        system_prompt=self.system_prompt,
+                        user_prompt=prompt,
+                    ):
+                        token = chunk.get("token") if isinstance(chunk, dict) and "token" in chunk else str(chunk)
+                        step_text += token
+                        yield {"type": "llm_token", "token": token, "iteration": iterations_count}
+                except NotImplementedError:
+                    step_text = self._get_llm_response(prompt)
+                else:
+                    yield {"type": "llm_response", "content": step_text, "iteration": iterations_count}
+                    llm_response_emitted = True
+            else:
+                step_text = self._get_llm_response(prompt)
+                yield {"type": "llm_response", "content": step_text, "iteration": iterations_count}
+                llm_response_emitted = True
+
+            if not llm_response_emitted:
+                yield {"type": "llm_response", "content": step_text, "iteration": iterations_count}
+
+            if "Final Answer:" in step_text and "Action:" not in step_text:
+                thought_match = re.search(r"Thought:\s*(.*?)(?:Action:|PAUSE:|Final Answer:|$)", step_text, re.DOTALL)
+                pause_match = re.search(r"PAUSE:\s*(.*?)(?:Thought:|Action:|Final Answer:|$)", step_text, re.DOTALL)
+
+                if thought_match:
+                    thought = thought_match.group(1).strip()
+                    print("✅ Parsed Thought:", thought)
+
+                if pause_match:
+                    pause_reflection = pause_match.group(1).strip()
+                    print("✅ Parsed Pause Reflection:", pause_reflection)
+
+                thought_step = ThoughtStep(
+                    thought=thought,
+                    pause_reflection=pause_reflection
+                )
+                thought_process.append(thought_step)
+                yield {"type": "thought_step", "step": model_to_dict(thought_step), "iteration": iterations_count}
+
+                final_answer = None
+                final_answer_match = re.search(r"Final Answer:\s*(.*)", step_text, re.DOTALL)
+                if final_answer_match:
+                    final_answer = final_answer_match.group(1).strip()
+                    print("✅ Parsed Final Answer:", final_answer)
+                    yield {"type": "final_answer", "final_answer": final_answer, "iteration": iterations_count}
+
+                response = AgentResponse(
+                    thought_process=thought_process,
+                    final_answer=final_answer
+                )
+                yield {"type": "complete", "response": model_to_dict(response)}
+                return
+            else:
+                try:
+                    thought_match = re.search(r"Thought:\s*(.*?)(?:Action:|PAUSE:|Final Answer:|$)", step_text, re.DOTALL)
+                    action_match = re.search(r"Action:\s*(\{.*?\})(?:Observation:|PAUSE:|Thought:|Final Answer:|$)", step_text, re.DOTALL)
+                    pause_match = re.search(r"PAUSE:\s*(.*?)(?:Thought:|Action:|Final Answer:|$)", step_text, re.DOTALL)
+
+                    if thought_match:
+                        thought = thought_match.group(1).strip()
+                        print("✅ Parsed Thought:", thought)
+
+                    if action_match:
+                        action_text = action_match.group(1).strip()
+                        print("✅ Parsed Action JSON:", action_text)
+
+                        action_data = json.loads(action_text)
+                        action = Action(
+                            action_type=action_data["action_type"],
+                            input=action_data["input"]
+                        )
+
+                        result = self.execute_tool(action)
+                        print("✅ Parsed Action Results:", result)
+                        observation = Observation(result=result)
+
+                    if pause_match:
+                        pause_reflection = pause_match.group(1).strip()
+                        print("✅ Parsed Pause Reflection:", pause_reflection)
+
+                    thought_step = ThoughtStep(
+                        thought=thought,
+                        action=action,
+                        observation=observation,
+                        pause_reflection=pause_reflection
+                    )
+                    thought_process.append(thought_step)
+                    yield {"type": "thought_step", "step": model_to_dict(thought_step), "iteration": iterations_count}
+                except Exception as e:
+                    print(f"❌ Error parsing LLM response: {e}")
+                    print(f"❌ Raw step text: {step_text}")
+
+                    error_message = (
+                        f"Error parsing LLM response: {e}\n"
+                        f"Response: {step_text}\n\n"
+                        "### Response format (choose only one per response)\n\n"
+                        "Option 1 — When action is needed:\n"
+                        "Thought: Your reasoning about action\n"
+                        "Action: {\"action_type\": \"<action_type>\", \"input\": <input_data>}\n\n"
+                        "Option 2 — When you're confident in the final response:\n"
+                        "Thought: Now I know the answer that will be given in Final Answer.\n"
+                        "Final Answer: Provide a complete, well-structured response that directly addresses the original question."
+                    )
+
+                    print("✅ Parsed Action Results:", error_message)
+
+                    observation = Observation(result=error_message)
+
+                    thought_step = ThoughtStep(
+                        thought=None,
+                        action=None,
+                        observation=observation,
+                        pause_reflection=None
+                    )
+                    thought_process.append(thought_step)
+                    yield {"type": "error", "error": error_message, "iteration": iterations_count}
+                    yield {"type": "thought_step", "step": model_to_dict(thought_step), "iteration": iterations_count}
+
+        response = AgentResponse(
+            thought_process=thought_process,
+            final_answer="❌ Stopped after reaching maximum iterations limit."
+        )
+        yield {"type": "complete", "response": model_to_dict(response)}
+        return
 
     def run(self, query: str) -> AgentResponse:
         thought_process: List[ThoughtStep] = []

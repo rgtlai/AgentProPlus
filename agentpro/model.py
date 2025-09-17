@@ -1,8 +1,7 @@
 # model.py
-from typing import Dict, Any, Optional, List, Union
+from typing import Dict, Any, Optional, List, Union, Iterator
 import openai
 import litellm
-from litellm import completion
 import os
 
 class ModelClient:
@@ -19,6 +18,16 @@ class ModelClient:
         Chat completion method. Uses instance defaults if parameters not provided.
         """
         raise NotImplementedError("Subclasses must implement this method")
+
+    def chat_completion_stream(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        temperature: Optional[float] = None,
+        max_tokens: Optional[int] = None,
+    ) -> Iterator[Dict[str, Any]]:
+        """Optional streaming interface. Subclasses may override if supported."""
+        raise NotImplementedError("Streaming not implemented for this client")
 
 class OpenAIClient(ModelClient):
     """Client for OpenAI models"""
@@ -44,6 +53,35 @@ class OpenAIClient(ModelClient):
             max_tokens=tokens
         )
         return response.choices[0].message.content
+
+    def chat_completion_stream(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        temperature: Optional[float] = None,
+        max_tokens: Optional[int] = None,
+    ) -> Iterator[Dict[str, Any]]:
+        temp = temperature if temperature is not None else self.temperature
+        tokens = max_tokens if max_tokens is not None else self.max_tokens
+
+        stream = self.client.chat.completions.create(
+            model=self.model_name,
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ],
+            temperature=temp,
+            max_tokens=tokens,
+            stream=True,
+        )
+
+        for chunk in stream:
+            if not chunk.choices:
+                continue
+            delta = chunk.choices[0].delta
+            token = getattr(delta, "content", None)
+            if token:
+                yield {"token": token}
         
 
 class LiteLLMClient(ModelClient):
@@ -89,6 +127,43 @@ class LiteLLMClient(ModelClient):
         )
         
         return response.choices[0].message.content
+
+    def chat_completion_stream(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        temperature: Optional[float] = None,
+        max_tokens: Optional[int] = None,
+    ) -> Iterator[Dict[str, Any]]:
+        temp = temperature if temperature is not None else self.temperature
+        tokens = max_tokens if max_tokens is not None else self.max_tokens
+
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt}
+        ]
+
+        model_param = f"{self.litellm_provider}/{self.model_name}"
+
+        stream = litellm.completion(
+            model=model_param,
+            messages=messages,
+            temperature=temp,
+            max_tokens=tokens,
+            stream=True,
+        )
+
+        for chunk in stream:
+            # LiteLLM streams dict with 'choices'
+            choices = getattr(chunk, "choices", None) or chunk.get("choices") if isinstance(chunk, dict) else None
+            if not choices:
+                continue
+            delta = choices[0].get("delta") if isinstance(choices[0], dict) else getattr(choices[0], "delta", None)
+            if not delta:
+                continue
+            token = delta.get("content") if isinstance(delta, dict) else getattr(delta, "content", None)
+            if token:
+                yield {"token": token}
 
 class ModelConfig:
     """Configuration class for a LLM model"""

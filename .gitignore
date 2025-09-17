@@ -19,6 +19,7 @@ env/
 # IDE files
 .idea/
 .vscode/
+.DS_Store
 
 # Output files
 *.pptx

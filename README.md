@@ -15,6 +15,14 @@ AgentPro is a lightweight ReAct-style agentic framework built in Python, designe
 - 📦 Local package structure for easy extension
 - 🧠 Powered by any LLM! (Anthropic, Open AI or any other Open source LLMs)
 
+## ♻️ Fork Enhancements
+
+This fork extends the upstream AgentPro project with live-streaming capabilities:
+
+- `ReactAgent.run_stream` generator that emits structured events (prompt, streamed tokens, parsed steps, final answer, errors) for real-time UIs or CLIs.
+- Streaming hooks on `ModelClient` so OpenAI and LiteLLM backends can surface incremental tokens without waiting for the full response.
+- Graceful fallback to the original non-streaming flow when a provider does not expose streaming APIs.
+
 ## Quick Start
 
 ### Installation
@@ -77,6 +85,41 @@ For Ares api key, follow these steps:
 1. Go to the [Traversaal API platform](https://api.traversaal.ai/)
 2. Log in or create an account
 3. Generate your Ares API key from the dashboard.
+
+### Streaming Usage
+
+Use `run_stream` to react to events as they arrive. Each yielded dict includes a `type` key so you can branch on prompts, incremental tokens, structured thought steps, or the final answer.
+
+```python
+import os
+from agentpro import ReactAgent, create_model
+from agentpro.tools import AresInternetTool
+
+model = create_model(provider="openai", model_name="gpt-4o", api_key=os.environ.get("OPENAI_API_KEY"))
+tools = [AresInternetTool(os.getenv("ARES_API_KEY", None))]
+
+# Initialize agent
+agent = ReactAgent(model=model, tools=tools)
+
+for event in agent.run_stream("Summarize the Apollo program in two sentences."):
+    if event["type"] == "prompt":
+        print("\n--- Sending prompt ---\n")
+    elif event["type"] == "llm_token":
+        print(event["token"], end="", flush=True)
+    elif event["type"] == "final_answer":
+        print(f"\n\nFinal Answer: {event['final_answer']}")
+    elif event["type"] == "error":
+        print(f"\nEncountered error: {event['error']}")
+```
+
+Event stream basics:
+
+- `prompt`: The compiled system/user prompt with history.
+- `llm_token`: Incremental content from providers that support streaming.
+- `llm_response`: The concatenated response once streaming finishes or when falling back to non-streaming mode.
+- `thought_step`: Parsed Thought/Action/Observation blocks the agent recorded.
+- `final_answer`: The agent’s concluding reply.
+- `error`: Formatting or tool-execution issues surfaced as observations.
 
 <!--
 You can also use the [Quick Start](https://github.com/traversaal-ai/AgentPro/blob/main/cookbook/quick_start.ipynb) Jupyter Notebook to run AgentPro directly in Colab.
