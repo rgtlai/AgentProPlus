@@ -1,4 +1,4 @@
-from typing import List, Optional, Any
+from typing import List, Optional, Any, Dict
 import json
 from .tools import Tool
 from .agent import Action, Observation, ThoughtStep, AgentResponse
@@ -22,6 +22,9 @@ class ReactAgent:
         # Build dynamic system prompt
         tools_description = "\n\n".join(tool.get_tool_description() for tool in self.tools)
         tool_names = ", ".join(tool.action_type for tool in self.tools)
+
+        # Maintain conversation turns across invocations
+        self.conversation_history: List[Dict[str, Optional[str]]] = []
 
         # Get current date here
         current_date = datetime.now().strftime("%B %d, %Y")
@@ -99,6 +102,28 @@ Final Answer: Provide a complete, well-structured response that directly address
             user_prompt=prompt,
             )
 
+    def _build_prompt(self, query: str, thought_process: List[ThoughtStep]) -> str:
+        prompt = f"{self.system_prompt}\n\n"
+
+        if self.conversation_history:
+            prompt += "Conversation history:\n"
+            for turn in self.conversation_history:
+                user_msg = turn.get("user")
+                assistant_msg = turn.get("assistant")
+                if user_msg:
+                    prompt += f"User: {user_msg}\n"
+                if assistant_msg:
+                    prompt += f"Assistant: {assistant_msg}\n"
+            prompt += "\n"
+
+        prompt += f"Question: {query}\n\n"
+
+        if thought_process:
+            prompt += self._format_history(thought_process)
+
+        prompt += "\nNow continue with next steps by strictly following the required format.\n"
+        return prompt
+
     def run_stream(
         self,
         query: str,
@@ -132,10 +157,7 @@ Final Answer: Provide a complete, well-structured response that directly address
             observation = None
             pause_reflection = None
 
-            prompt = f"{self.system_prompt}\n\nQuestion: {query}\n\n"
-            if thought_process:
-                prompt += self._format_history(thought_process)
-            prompt += "\nNow continue with next steps by strictly following the required format.\n"
+            prompt = self._build_prompt(query, thought_process)
 
             if not printed_prompt:
                 print("✅  [Debug] Sending System Prompt (with history) to LLM:")
@@ -209,6 +231,10 @@ Final Answer: Provide a complete, well-structured response that directly address
                     thought_process=thought_process,
                     final_answer=final_answer
                 )
+                self.conversation_history.append({
+                    "user": query,
+                    "assistant": final_answer
+                })
                 yield {"type": "complete", "response": model_to_dict(response)}
                 return
             else:
@@ -300,11 +326,7 @@ Final Answer: Provide a complete, well-structured response that directly address
             observation = None
             pause_reflection = None
 
-            # Get the System Prompt with History (Whole thought process)
-            prompt = f"{self.system_prompt}\n\nQuestion: {query}\n\n"
-            if thought_process:
-                prompt += self._format_history(thought_process)
-            prompt += "\nNow continue with next steps by strictly following the required format.\n"
+            prompt = self._build_prompt(query, thought_process)
 
             # Print whole System Prompt once in the start
             if not printed_prompt:
@@ -346,15 +368,22 @@ Final Answer: Provide a complete, well-structured response that directly address
                     ))
 
                 # Extract Final Answer
+                final_answer = None
                 final_answer_match = re.search(r"Final Answer:\s*(.*)", step_text, re.DOTALL)
                 if final_answer_match:
                     final_answer = final_answer_match.group(1).strip()
                     print("✅ Parsed Final Answer:", final_answer)
 
-                return AgentResponse(
+                response = AgentResponse(
                     thought_process=thought_process,
                     final_answer=final_answer
                 )
+                self.conversation_history.append({
+                    "user": query,
+                    "assistant": final_answer
+                })
+
+                return response
             else:
                 try:
                     # Try Extracting Thought Action and Pause
