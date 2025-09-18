@@ -1,8 +1,8 @@
 import os
 import argparse
-from agentpro import ReactAgent
-from agentpro.tools import QuickInternetTool, CalculateTool, UserInputTool, AresInternetTool, YFinanceTool, TraversaalProRAGTool, SlideGenerationTool
-from agentpro import create_model
+from agentproplus import ReactAgent
+from agentproplus.tools import QuickInternetTool, CalculateTool, UserInputTool, AresInternetTool, YFinanceTool, TraversaalProRAGTool, SlideGenerationTool
+from agentproplus import create_model
 
 def main():
     try:
