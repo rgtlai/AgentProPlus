@@ -1,6 +1,8 @@
 from typing import List, Optional, Any, Dict
 import json
 from .tools import Tool
+from .tools.mcp_tool import MCPTool
+from .mcp_bridge import MCPClientManager, MCPNotAvailableError
 from .agent import Action, Observation, ThoughtStep, AgentResponse
 from .model import ModelClient, create_model
 
@@ -10,7 +12,7 @@ from datetime import datetime
 
 
 class ReactAgent:
-    def __init__(self, model: Optional[ModelClient] = None, tools: List[Tool] = None, custom_system_prompt: str = None, max_iterations: int = 20):
+    def __init__(self, model: Optional[ModelClient] = None, tools: List[Tool] = None, custom_system_prompt: str = None, max_iterations: int = 20, mcp_config: Optional[List[Dict[str, Any]]] = None):
 
         self.client = model or create_model(provider="openai")
 
@@ -19,12 +21,43 @@ class ReactAgent:
         # Get Tool Details
         self.tools = tools or []
         self.tool_registry = {tool.action_type: tool for tool in self.tools}
-        # Build dynamic system prompt
-        tools_description = "\n\n".join(tool.get_tool_description() for tool in self.tools)
-        tool_names = ", ".join(tool.action_type for tool in self.tools)
+
+        # Optional: load MCP tools from config
+        self._mcp_manager: Optional[MCPClientManager] = None
+        if mcp_config:
+            try:
+                self._mcp_manager = MCPClientManager(mcp_config)
+                self._mcp_manager.start()
+                discovered = self._mcp_manager.list_all_tools()
+                for server_id, items in discovered.items():
+                    for t in items:
+                        tool_name = t.get("name")
+                        desc = t.get("description") or "MCP tool"
+                        schema = t.get("input_schema")
+                        input_format = "JSON per tool schema"
+                        if schema and isinstance(schema, dict):
+                            title = schema.get("title")
+                            input_format = f"JSON matching schema{': ' + title if title else ''}"
+                        mtool = MCPTool(
+                            server_id=server_id,
+                            tool_name=tool_name,
+                            description=desc,
+                            input_format=input_format,
+                            manager=self._mcp_manager,
+                        )
+                        self.tools.append(mtool)
+                        self.tool_registry[mtool.action_type] = mtool
+            except MCPNotAvailableError:
+                print("⚠️ MCP not available. Install with 'pip install mcp' to enable MCP tools.")
+            except Exception as e:
+                print(f"⚠️ Failed to initialize MCP tools: {e}")
 
         # Maintain conversation turns across invocations
         self.conversation_history: List[Dict[str, Optional[str]]] = []
+
+        # Build dynamic system prompt after tools are finalized
+        tools_description = "\n\n".join(tool.get_tool_description() for tool in self.tools)
+        tool_names = ", ".join(tool.action_type for tool in self.tools)
 
         # Get current date here
         current_date = datetime.now().strftime("%B %d, %Y")

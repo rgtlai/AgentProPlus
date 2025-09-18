@@ -3,7 +3,7 @@ requires = ["setuptools>=61", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "agentpro"
+name = "agentproplus"
 version = "0.1.0"
 description = "AgentPro: Traversaal Agentic Framework"
 readme = "README.md"
@@ -30,6 +30,7 @@ dependencies = [
     "transformers>=4.56.1",
     "torch>=2.8.0",
     "accelerate>=1.10.1",
+    "mcp>=1.14.0",
 ]
 
 [project.urls]

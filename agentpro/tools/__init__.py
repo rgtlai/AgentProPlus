@@ -6,6 +6,7 @@ from .ares_tool import AresInternetTool
 from .yfinance_tool import YFinanceTool
 from .traversaalpro_rag_tool import TraversaalProRAGTool
 from .slide_generation_tool import SlideGenerationTool
+from .mcp_tool import MCPTool
 
 __all__ = [
     "Tool",
@@ -16,4 +17,5 @@ __all__ = [
     "YFinanceTool",
     "TraversaalProRAGTool",
     "SlideGenerationTool"
+    ,"MCPTool"
 ]

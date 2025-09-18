@@ -17,8 +17,9 @@ AgentPro is a lightweight ReAct-style agentic framework built in Python, designe
 
 ## ♻️ Fork Enhancements
 
-This fork extends the upstream AgentPro project with live-streaming capabilities:
+This fork extends the upstream AgentPro project with conversation-aware streaming:
 
+- Persistent chat history inside `ReactAgent` so each request automatically includes recent user/assistant turns when prompting the LLM.
 - `ReactAgent.run_stream` generator that emits structured events (prompt, streamed tokens, parsed steps, final answer, errors) for real-time UIs or CLIs.
 - Streaming hooks on `ModelClient` so OpenAI and LiteLLM backends can surface incremental tokens without waiting for the full response.
 - Graceful fallback to the original non-streaming flow when a provider does not expose streaming APIs.
@@ -120,6 +121,57 @@ Event stream basics:
 - `thought_step`: Parsed Thought/Action/Observation blocks the agent recorded.
 - `final_answer`: The agent’s concluding reply.
 - `error`: Formatting or tool-execution issues surfaced as observations.
+
+## MCP Integration (Model Context Protocol)
+
+This fork can auto‑discover and use tools from MCP servers. It keeps the ReAct loop unchanged — MCP tools are registered like any other Tool and listed in the system prompt, so the LLM can select them with a standard Action.
+
+### Install and Run the Example Server
+
+```bash
+pip install mcp  # optional dependency
+python mcp_server.py  # starts a stdio MCP server exposing echo and add
+```
+
+### Register MCP Tools in the Agent
+
+Pass an `mcp_config` to `ReactAgent` to connect and enumerate tools at startup:
+
+```python
+import os
+from agentpro import ReactAgent, create_model
+from agentpro.tools import AresInternetTool
+
+model = create_model(provider="openai", model_name="gpt-4o", api_key=os.environ.get("OPENAI_API_KEY"))
+
+tools = [AresInternetTool(os.getenv("ARES_API_KEY", None))]
+
+agent = ReactAgent(
+    model=model,
+    tools=tools,
+    mcp_config=[
+        {"id": "example", "command": "python", "args": ["mcp_server.py"]}
+    ],
+)
+
+response = agent.run("Use the MCP add tool to add 2 and 3, then echo the result.")
+print("Final:", response.final_answer)
+```
+
+What gets registered:
+
+- For each MCP tool, the agent creates an internal Tool with action type `mcp:<server_id>:<tool_name>` and description/schema hints.
+- The tool appears in the system prompt’s tool list so the LLM can select it with an Action JSON like:
+
+```
+Action: {"action_type": "mcp:example:add", "input": {"a": 2, "b": 3}}
+```
+
+Notes:
+
+- MCP is optional. If the `mcp` package is not installed or a server fails to start, the agent continues without MCP tools.
+- Inputs should be valid JSON matching the MCP tool schema; results are returned as text when possible.
+- This repo includes a minimal `mcp_server.py` you can extend with your own tools.
 
 <!--
 You can also use the [Quick Start](https://github.com/traversaal-ai/AgentPro/blob/main/cookbook/quick_start.ipynb) Jupyter Notebook to run AgentPro directly in Colab.
