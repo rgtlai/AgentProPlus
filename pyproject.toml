@@ -7,7 +7,7 @@ name = "agentproplus"
 version = "0.1.0"
 description = "AgentPro: Traversaal Agentic Framework"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 license = {file = "LICENSE.txt"}
 authors = [{name = "Traversaal AI", email = "contact@traversaal.ai"}]
 dependencies = [
@@ -34,8 +34,8 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/traversaal-ai/AgentPro"
+Homepage = "https://github.com/rgtlai/AgentProPlus"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["agentpro", "agentpro.*"]
+include = ["agentproplus", "agentproplus.*"]
